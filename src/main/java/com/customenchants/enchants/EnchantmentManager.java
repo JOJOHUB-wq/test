@@ -36,6 +36,17 @@ public class EnchantmentManager {
         registerEnchant(new DodgeEnchant(plugin));
         registerEnchant(new JumperEnchant(plugin));
         registerEnchant(new PoisonThornsEnchant(plugin));
+        registerEnchant(new LavawalkerEnchant(plugin));
+        registerEnchant(new ScoutEnchant(plugin));
+        registerEnchant(new DetectEnchant(plugin));
+
+        // Misc Tool/Weapon Enchantments
+        registerEnchant(new PingerEnchant(plugin));
+        registerEnchant(new GreenerEnchant(plugin));
+        registerEnchant(new PullingEnchant(plugin));
+        registerEnchant(new ComebackEnchant(plugin));
+        registerEnchant(new BomberEnchant(plugin));
+        registerEnchant(new WebEnchant(plugin));
     }
 
     private void registerEnchant(CustomEnchant enchant) {
@@ -60,6 +71,15 @@ public class EnchantmentManager {
     public CustomEnchant getEnchantByDisplayName(String displayName) {
         for (CustomEnchant enchant : registeredEnchants) {
             if (enchant.getDisplayName().equalsIgnoreCase(displayName)) {
+                return enchant;
+            }
+        }
+        return null;
+    }
+
+    public CustomEnchant getEnchantByKey(String key) {
+        for (CustomEnchant enchant : registeredEnchants) {
+            if (enchant.getKey().equalsIgnoreCase(key)) {
                 return enchant;
             }
         }

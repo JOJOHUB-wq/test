@@ -9,6 +9,7 @@ import com.customenchants.listeners.AnvilListener;
 import com.customenchants.listeners.EnchantingTableListener;
 import com.customenchants.menu.MenuListener;
 import com.customenchants.menu.MenuManager;
+import com.customenchants.utils.WorldGuardUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AtheriumEnchants extends JavaPlugin {
@@ -17,6 +18,7 @@ public class AtheriumEnchants extends JavaPlugin {
     private EnchantmentManager enchantmentManager;
     private EnchantmentConfig enchantmentConfig;
     private EconomyManager economyManager;
+    private WorldGuardUtil worldGuardUtil;
 
     @Override
     public void onEnable() {
@@ -32,11 +34,13 @@ public class AtheriumEnchants extends JavaPlugin {
         economyManager = new EconomyManager(this);
         menuManager = new MenuManager(this);
         enchantmentManager = new EnchantmentManager(this);
+        worldGuardUtil = new WorldGuardUtil();
 
         // Register listeners and commands
         getServer().getPluginManager().registerEvents(new MenuListener(this), this);
         getServer().getPluginManager().registerEvents(new EnchantingTableListener(this), this);
         getServer().getPluginManager().registerEvents(new AnvilListener(this), this);
+        getServer().getPluginManager().registerEvents(new BlockBreakHandler(this), this);
         getCommand("ae").setExecutor(new CommandManager(this));
         getCommand("ae").setTabCompleter(new AetheriumTabCompleter(this));
 
@@ -66,5 +70,9 @@ public class AtheriumEnchants extends JavaPlugin {
 
     public EconomyManager getEconomyManager() {
         return economyManager;
+    }
+
+    public WorldGuardUtil getWorldGuardUtil() {
+        return worldGuardUtil;
     }
 }

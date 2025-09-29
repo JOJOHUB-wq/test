@@ -70,10 +70,11 @@ public class MenuListener implements Listener {
             return; // Not a purchasable enchant book
         }
 
-        String displayName = ChatColor.stripColor(itemSection.getString("display_name"));
-        CustomEnchant enchant = plugin.getEnchantmentManager().getEnchantByDisplayName(displayName);
+        // Use the item's key from the menu config to find the enchant.
+        CustomEnchant enchant = plugin.getEnchantmentManager().getEnchantByKey(itemKey);
 
         if (enchant == null) {
+            // This is not a purchasable enchant, but likely a navigation item.
             return;
         }
 

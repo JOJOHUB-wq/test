@@ -2,10 +2,10 @@ package com.customenchants.enchants;
 
 import com.customenchants.AtheriumEnchants;
 
-public class LumberjackEnchant extends CustomEnchant {
+public class WebEnchant extends CustomEnchant {
 
-    public LumberjackEnchant(AtheriumEnchants plugin) {
-        super("woodcutter", plugin); // Key from the new config
+    public WebEnchant(AtheriumEnchants plugin) {
+        super("web", plugin);
     }
 
     // The logic is now handled by the central BlockBreakHandler.
