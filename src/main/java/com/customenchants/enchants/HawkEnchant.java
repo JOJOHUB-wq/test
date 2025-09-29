@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import org.bukkit.Material;
+import com.customenchants.CustomEnchants;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -19,23 +19,14 @@ public class HawkEnchant extends CustomEnchant {
 
     private final Map<UUID, Integer> hawkArrows = new HashMap<>();
 
-    @Override
-    public String getName() {
-        return "Hawk";
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 3; // Epic enchant
-    }
-
-    @Override
-    public boolean canEnchantItem(ItemStack item) {
-        return item.getType() == Material.BOW || item.getType() == Material.CROSSBOW;
+    public HawkEnchant(CustomEnchants plugin) {
+        super("Hawk", plugin);
     }
 
     @EventHandler
     public void onEntityShootBow(EntityShootBowEvent event) {
+        if (!isEnabled()) return;
+
         if (!(event.getEntity() instanceof Player) || !(event.getProjectile() instanceof Arrow)) {
             return;
         }
@@ -49,7 +40,6 @@ public class HawkEnchant extends CustomEnchant {
             return;
         }
 
-        // Check if player is in the air
         if (!player.hasGravity() || !player.getLocation().subtract(0, 0.1, 0).getBlock().getType().isSolid()) {
             Arrow arrow = (Arrow) event.getProjectile();
             hawkArrows.put(arrow.getUniqueId(), level);
@@ -58,6 +48,8 @@ public class HawkEnchant extends CustomEnchant {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onEntityDamageByArrow(EntityDamageByEntityEvent event) {
+        if (!isEnabled()) return;
+
         if (!(event.getDamager() instanceof Arrow) || !(event.getEntity() instanceof LivingEntity)) {
             return;
         }
@@ -71,15 +63,14 @@ public class HawkEnchant extends CustomEnchant {
 
         int level = hawkArrows.get(arrowId);
 
-        // Bonus damage: 15% per level
-        double bonusDamage = event.getDamage() * (level * 0.15);
+        double damageMultiplier = getConfigValue(level, "damage_multiplier", 1.15);
+        double bonusDamage = event.getDamage() * (damageMultiplier - 1.0);
 
         event.setDamage(event.getDamage() + bonusDamage);
     }
 
     @EventHandler
     public void onProjectileHit(ProjectileHitEvent event) {
-        // Clean up the map when the arrow lands to prevent memory leaks
         if (event.getEntity() instanceof Arrow) {
             UUID arrowId = event.getEntity().getUniqueId();
             hawkArrows.remove(arrowId);

@@ -1,7 +1,7 @@
 package com.customenchants.enchants;
 
+import com.customenchants.CustomEnchants;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -11,24 +11,14 @@ import org.bukkit.inventory.ItemStack;
 
 public class JumperEnchant extends CustomEnchant {
 
-    @Override
-    public String getName() {
-        return "Jumper";
+    public JumperEnchant(CustomEnchants plugin) {
+        super("Jumper", plugin);
     }
 
-    @Override
-    public int getMaxLevel() {
-        return 1; // Epic enchant, one level is enough
-    }
-
-    @Override
-    public boolean canEnchantItem(ItemStack item) {
-        return item.getType().name().endsWith("_BOOTS");
-    }
-
-    // Allow flight when player is on the ground and wearing the boots
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
+        if (!isEnabled()) return;
+
         Player player = event.getPlayer();
         if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) {
             return;
@@ -42,9 +32,10 @@ public class JumperEnchant extends CustomEnchant {
         }
     }
 
-    // Handle the double jump
     @EventHandler
     public void onPlayerToggleFlight(PlayerToggleFlightEvent event) {
+        if (!isEnabled()) return;
+
         Player player = event.getPlayer();
         if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) {
             return;
@@ -60,14 +51,15 @@ public class JumperEnchant extends CustomEnchant {
             player.setAllowFlight(false);
             player.setFlying(false);
 
-            // Apply the jump velocity
-            player.setVelocity(player.getLocation().getDirection().multiply(1.5).setY(1));
+            double power = getConfigValue(level, "power", 1.0);
+            player.setVelocity(player.getLocation().getDirection().multiply(power * 1.5).setY(power));
         }
     }
 
-    // Initial check on join
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+        if (!isEnabled()) return;
+
         Player player = event.getPlayer();
          if (player.getEquipment() != null && player.getEquipment().getBoots() != null) {
             int level = getLevelFromItem(player.getEquipment().getBoots());

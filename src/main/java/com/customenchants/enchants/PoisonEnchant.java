@@ -1,5 +1,6 @@
 package com.customenchants.enchants;
 
+import com.customenchants.CustomEnchants;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,23 +13,14 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class PoisonEnchant extends CustomEnchant {
 
-    @Override
-    public String getName() {
-        return "Poison";
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 2;
-    }
-
-    @Override
-    public boolean canEnchantItem(ItemStack item) {
-        return item.getType().name().endsWith("_SWORD");
+    public PoisonEnchant(CustomEnchants plugin) {
+        super("Poison", plugin);
     }
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
+        if (!isEnabled()) return;
+
         if (!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof LivingEntity)) {
             return;
         }
@@ -42,13 +34,12 @@ public class PoisonEnchant extends CustomEnchant {
             return;
         }
 
-        // Chance to poison: 15% per level
-        double chance = level * 0.15;
+        double chance = getConfigValue(level, "chance", 0.15);
         if (ThreadLocalRandom.current().nextDouble() < chance) {
-            // Duration in seconds: 3 seconds per level. PotionEffect takes ticks (20 ticks/sec)
-            int duration = level * 3 * 20;
-            // Amplifier: 0 for Poison I, 1 for Poison II. Level 1 -> Poison I, Level 2 -> Poison II
-            int amplifier = level - 1;
+            // Duration in seconds from config, converted to ticks.
+            int duration = getConfigValue(level, "duration", 3) * 20;
+            // Amplifier from config (0 for Poison I, 1 for Poison II).
+            int amplifier = getConfigValue(level, "amplifier", level - 1);
 
             victim.addPotionEffect(new PotionEffect(PotionEffectType.POISON, duration, amplifier));
         }

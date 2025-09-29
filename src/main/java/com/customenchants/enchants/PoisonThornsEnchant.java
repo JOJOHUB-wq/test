@@ -1,5 +1,6 @@
 package com.customenchants.enchants;
 
+import com.customenchants.CustomEnchants;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,25 +12,14 @@ import org.bukkit.potion.PotionEffectType;
 
 public class PoisonThornsEnchant extends CustomEnchant {
 
-    private static final int MAX_DURATION_TICKS = 200; // 10 seconds max
-
-    @Override
-    public String getName() {
-        return "Poison-Thorns";
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 2; // Epic enchant
-    }
-
-    @Override
-    public boolean canEnchantItem(ItemStack item) {
-        return item.getType().name().endsWith("_BOOTS");
+    public PoisonThornsEnchant(CustomEnchants plugin) {
+        super("Poison-Thorns", plugin);
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+        if (!isEnabled()) return;
+
         if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof LivingEntity)) {
             return;
         }
@@ -47,18 +37,19 @@ public class PoisonThornsEnchant extends CustomEnchant {
             return;
         }
 
-        // Duration calculation: 1 second (20 ticks) per heart (2 damage) of damage dealt, per level.
         double damage = event.getFinalDamage();
-        int duration = (int) ((damage / 2.0) * (20 * level));
+        double multiplier = getConfigValue(level, "damage_to_duration_multiplier", 10.0); // Ticks per heart
+        int maxDuration = getConfigValue(level, "max_duration_ticks", 200);
 
-        if (duration > MAX_DURATION_TICKS) {
-            duration = MAX_DURATION_TICKS;
+        int duration = (int) (damage / 2.0 * multiplier);
+
+        if (duration > maxDuration) {
+            duration = maxDuration;
         }
 
         if (duration <= 0) return;
 
-        // Amplifier: 0 for level 1 (Poison I), 1 for level 2 (Poison II)
-        int amplifier = level - 1;
+        int amplifier = getConfigValue(level, "amplifier", level - 1);
 
         attacker.addPotionEffect(new PotionEffect(PotionEffectType.POISON, duration, amplifier));
     }

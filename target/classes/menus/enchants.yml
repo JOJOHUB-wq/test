@@ -1,0 +1,70 @@
+id: enchants
+provider: default
+type: CHEST
+size: 27
+title: '&#f89d57Кастомные зачарования'
+items:
+  sword_enchants:
+    display_name: "&#f89d57Зачарования для оружия"
+    lore:
+      - ''
+      - '&fВ этом разделе находятся'
+      - '&fразличные зачарования для оружия'
+      - ''
+      - "&#FF6600 ➥ Нажмите&#FFFFFF, чтобы перейти"
+    material: NETHERITE_SWORD
+    on_right_click:
+      commands:
+        - '[OPEN] en1'
+    on_left_click:
+      commands:
+        - '[OPEN] en1'
+
+  pickaxe_enchants:
+    display_name: "&#f89d57Зачарования для инструментов"
+    lore:
+      - ''
+      - '&fВ этом разделе находятся'
+      - '&fразличные зачарования для инструментов'
+      - ''
+      - "&#FF6600 ➥ Нажмите&#FFFFFF, чтобы перейти"
+    material: NETHERITE_PICKAXE
+    on_right_click:
+      commands:
+        - '[OPEN] en2'
+    on_left_click:
+      commands:
+        - '[OPEN] en2'
+
+  armor_enchants:
+    display_name: "&#f89d57Зачарования для брони"
+    lore:
+      - ''
+      - '&fВ этом разделе находятся'
+      - '&fразличные зачарования для брони'
+      - ''
+      - "&#FF6600 ➥ Нажмите&#FFFFFF, чтобы перейти"
+    material: NETHERITE_CHESTPLATE
+    on_right_click:
+      commands:
+        - '[OPEN] en3'
+    on_left_click:
+      commands:
+        - '[OPEN] en3'
+  glass:
+    display_name: "&7"
+    material: BLACK_STAINED_GLASS_PANE
+
+animation:
+  - tick: 1
+    opcodes:
+      - set: glass 0-26
+  - tick: 2
+    opcodes:
+      - set: sword_enchants 11
+  - tick: 3
+    opcodes:
+      - set: pickaxe_enchants 13
+  - tick: 4
+    opcodes:
+      - set: armor_enchants 15

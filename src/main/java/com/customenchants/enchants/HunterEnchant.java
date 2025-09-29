@@ -1,5 +1,6 @@
 package com.customenchants.enchants;
 
+import com.customenchants.CustomEnchants;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -18,23 +19,14 @@ public class HunterEnchant extends CustomEnchant {
 
     private final Map<UUID, Long> cooldowns = new HashMap<>();
 
-    @Override
-    public String getName() {
-        return "Hunter";
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 3; // Epic enchant
-    }
-
-    @Override
-    public boolean canEnchantItem(ItemStack item) {
-        return item.getType() == Material.BOW;
+    public HunterEnchant(CustomEnchants plugin) {
+        super("Hunter", plugin);
     }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (!isEnabled()) return;
+
         if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
@@ -51,31 +43,28 @@ public class HunterEnchant extends CustomEnchant {
             return;
         }
 
-        // Cooldown: 20 ticks (1s) base, reduced by 4 ticks per level
-        long cooldownTime = 20 - (level * 4L);
+        long cooldownTime = getConfigValue(level, "cooldown_ticks", 20) * 50L; // Convert ticks to ms
         long lastShot = cooldowns.getOrDefault(player.getUniqueId(), 0L);
-        if (System.currentTimeMillis() - lastShot < cooldownTime * 50) { // Convert ticks to ms
+        if (System.currentTimeMillis() - lastShot < cooldownTime) {
             return;
         }
 
-        // Check for arrows
         if (!player.getInventory().contains(Material.ARROW) && player.getGameMode() != GameMode.CREATIVE) {
             return;
         }
 
-        event.setCancelled(true); // Prevent normal bow drawing
+        event.setCancelled(true);
 
-        // Consume arrow
         if (player.getGameMode() != GameMode.CREATIVE) {
             player.getInventory().removeItem(new ItemStack(Material.ARROW, 1));
         }
 
-        // Fire arrow
         Arrow arrow = player.launchProjectile(Arrow.class);
         arrow.setShooter(player);
         arrow.setPickupStatus(Arrow.PickupStatus.ALLOWED);
-        // Force of 3.0 is equivalent to a fully drawn bow
-        arrow.setVelocity(player.getLocation().getDirection().multiply(3.0));
+
+        double power = getConfigValue(level, "power", 3.0);
+        arrow.setVelocity(player.getLocation().getDirection().multiply(power));
 
         player.playSound(player.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1.0F, 1.0F);
         cooldowns.put(player.getUniqueId(), System.currentTimeMillis());

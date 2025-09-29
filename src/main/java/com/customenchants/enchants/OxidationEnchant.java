@@ -1,5 +1,6 @@
 package com.customenchants.enchants;
 
+import com.customenchants.CustomEnchants;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,23 +11,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class OxidationEnchant extends CustomEnchant {
 
-    @Override
-    public String getName() {
-        return "Oxidation";
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 3; // Legendary enchant
-    }
-
-    @Override
-    public boolean canEnchantItem(ItemStack item) {
-        return item.getType().name().endsWith("_SWORD");
+    public OxidationEnchant(CustomEnchants plugin) {
+        super("Oxidation", plugin);
     }
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
+        if (!isEnabled()) return;
+
         if (!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof LivingEntity)) {
             return;
         }
@@ -44,9 +36,7 @@ public class OxidationEnchant extends CustomEnchant {
             return;
         }
 
-        // Apply extra damage to victim's armor
-        // 1 extra durability point per level
-        int extraDamage = level;
+        int extraDamage = getConfigValue(level, "extra_damage", 1);
 
         for (ItemStack armorPiece : victim.getEquipment().getArmorContents()) {
             if (armorPiece != null && armorPiece.getItemMeta() instanceof Damageable) {

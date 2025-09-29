@@ -1,0 +1,106 @@
+# This file contains the configuration for all custom enchantments.
+# Here you can adjust every aspect of each enchantment.
+
+enchantments:
+  Vampirism:
+    # Is this enchantment enabled?
+    enabled: true
+    # The name that appears in the item's lore.
+    display_name: "Vampirism"
+    # Maximum level for this enchantment.
+    max_level: 3
+    # Rarity of the enchantment. Affects enchanting table chances.
+    # Possible values: COMMON, UNCOMMON, RARE, EPIC, LEGENDARY
+    rarity: "RARE"
+    # Can this enchantment be obtained from the enchanting table?
+    enchanting_table_enabled: true
+    # List of enchantments this one cannot be combined with.
+    # Use the internal Bukkit names (e.g., "DAMAGE_ALL" for Sharpness).
+    conflicts_with:
+      - "DAMAGE_ALL"
+    # List of item types this can be applied to.
+    # Use Bukkit Material names.
+    applicable_items:
+      - "NETHERITE_SWORD"
+      - "DIAMOND_SWORD"
+      - "IRON_SWORD"
+    # Level-specific settings.
+    # You can define different values for each level.
+    levels:
+      1:
+        # Chance to trigger the effect (e.g., 0.10 for 10%).
+        chance: 0.10
+        # Amount of health to restore (in half-hearts).
+        heal_amount: 1.0
+      2:
+        chance: 0.15
+        heal_amount: 1.0
+      3:
+        chance: 0.20
+        heal_amount: 2.0
+
+  Bulldozer:
+    enabled: true
+    display_name: "Bulldozer"
+    max_level: 1
+    rarity: "LEGENDARY"
+    enchanting_table_enabled: true
+    conflicts_with:
+      - "SILK_TOUCH"
+    applicable_items:
+      - "NETHERITE_PICKAXE"
+      - "DIAMOND_PICKAXE"
+      - "NETHERITE_SHOVEL"
+      - "DIAMOND_SHOVEL"
+      - "NETHERITE_AXE"
+      - "DIAMOND_AXE"
+    levels:
+      1:
+        # Radius of effect (1 means 3x3 area).
+        radius: 1
+
+  Jumper:
+    enabled: true
+    display_name: "Jumper"
+    max_level: 1
+    rarity: "EPIC"
+    enchanting_table_enabled: true
+    conflicts_with: []
+    applicable_items:
+      - "NETHERITE_BOOTS"
+      - "DIAMOND_BOOTS"
+      - "LEATHER_BOOTS"
+    levels:
+      1:
+        # Strength of the double jump.
+        power: 1.0
+
+  AutoSmelt:
+    enabled: true
+    display_name: "Auto-Smelt"
+    max_level: 1
+    rarity: "LEGENDARY"
+    enchanting_table_enabled: true
+    conflicts_with:
+      - "SILK_TOUCH"
+    applicable_items:
+      - "NETHERITE_PICKAXE"
+      - "DIAMOND_PICKAXE"
+    levels:
+      1:
+        # Experience bonus for each smelted block.
+        xp_bonus: 1
+    # List of what to smelt into what. Format: "INPUT_MATERIAL: OUTPUT_MATERIAL"
+    smelt_map:
+      - "IRON_ORE: IRON_INGOT"
+      - "GOLD_ORE: GOLD_INGOT"
+      - "COPPER_ORE: COPPER_INGOT"
+      - "ANCIENT_DEBRIS: NETHERITE_SCRAP"
+      - "SAND: GLASS"
+      - "COBBLESTONE: STONE"
+      - "OAK_LOG: CHARCOAL"
+      - "SPRUCE_LOG: CHARCOAL"
+      - "BIRCH_LOG: CHARCOAL"
+      - "JUNGLE_LOG: CHARCOAL"
+      - "ACACIA_LOG: CHARCOAL"
+      - "DARK_OAK_LOG: CHARCOAL"

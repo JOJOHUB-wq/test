@@ -17,25 +17,25 @@ public class EnchantmentManager {
 
     public void registerEnchants() {
         // Weapon Enchantments
-        registerEnchant(new VampirismEnchant());
-        registerEnchant(new PoisonEnchant());
-        registerEnchant(new OxidationEnchant());
-        registerEnchant(new GlowEnchant());
-        registerEnchant(new ExperiencedEnchant());
-        registerEnchant(new HunterEnchant());
-        registerEnchant(new StuporEnchant());
-        registerEnchant(new SniperEnchant());
-        registerEnchant(new HawkEnchant());
+        registerEnchant(new VampirismEnchant(plugin));
+        registerEnchant(new PoisonEnchant(plugin));
+        registerEnchant(new OxidationEnchant(plugin));
+        registerEnchant(new GlowEnchant(plugin));
+        registerEnchant(new ExperiencedEnchant(plugin));
+        registerEnchant(new HunterEnchant(plugin));
+        registerEnchant(new StuporEnchant(plugin));
+        registerEnchant(new SniperEnchant(plugin));
+        registerEnchant(new HawkEnchant(plugin));
 
         // Tool Enchantments
-        registerEnchant(new BulldozerEnchant());
-        registerEnchant(new AutoSmeltEnchant());
-        registerEnchant(new LumberjackEnchant());
+        registerEnchant(new BulldozerEnchant(plugin));
+        registerEnchant(new AutoSmeltEnchant(plugin));
+        registerEnchant(new LumberjackEnchant(plugin));
 
         // Armor Enchantments
-        registerEnchant(new DodgeEnchant());
-        registerEnchant(new JumperEnchant());
-        registerEnchant(new PoisonThornsEnchant());
+        registerEnchant(new DodgeEnchant(plugin));
+        registerEnchant(new JumperEnchant(plugin));
+        registerEnchant(new PoisonThornsEnchant(plugin));
     }
 
     private void registerEnchant(CustomEnchant enchant) {

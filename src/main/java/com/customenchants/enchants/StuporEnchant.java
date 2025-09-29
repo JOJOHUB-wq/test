@@ -1,5 +1,6 @@
 package com.customenchants.enchants;
 
+import com.customenchants.CustomEnchants;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -21,24 +22,14 @@ public class StuporEnchant extends CustomEnchant {
             PotionEffectType.CONFUSION
     );
 
-    @Override
-    public String getName() {
-        return "Stupor";
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 3; // Epic enchant
-    }
-
-    @Override
-    public boolean canEnchantItem(ItemStack item) {
-        return item.getType() == Material.TRIDENT;
+    public StuporEnchant(CustomEnchants plugin) {
+        super("Stupor", plugin);
     }
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-        // This handles melee attacks with a trident
+        if (!isEnabled()) return;
+
         if (!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof LivingEntity)) {
             return;
         }
@@ -56,15 +47,12 @@ public class StuporEnchant extends CustomEnchant {
             return;
         }
 
-        // Chance to apply effect: 15% per level
-        double chance = level * 0.15;
+        double chance = getConfigValue(level, "chance", 0.15);
         if (ThreadLocalRandom.current().nextDouble() < chance) {
             PotionEffectType randomEffect = NEGATIVE_EFFECTS.get(ThreadLocalRandom.current().nextInt(NEGATIVE_EFFECTS.size()));
 
-            // Duration: 3 seconds per level. PotionEffect takes ticks (20 ticks/sec).
-            int duration = level * 3 * 20;
-            // Amplifier: 0 for level 1, 1 for level 2, etc.
-            int amplifier = level - 1;
+            int duration = getConfigValue(level, "duration", 3) * 20;
+            int amplifier = getConfigValue(level, "amplifier", level - 1);
 
             victim.addPotionEffect(new PotionEffect(randomEffect, duration, amplifier));
         }

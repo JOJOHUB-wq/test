@@ -1,5 +1,6 @@
 package com.customenchants.enchants;
 
+import com.customenchants.CustomEnchants;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,23 +13,14 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GlowEnchant extends CustomEnchant {
 
-    @Override
-    public String getName() {
-        return "Glow";
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 1; // Legendary, one level is enough for this effect
-    }
-
-    @Override
-    public boolean canEnchantItem(ItemStack item) {
-        return item.getType().name().endsWith("_SWORD");
+    public GlowEnchant(CustomEnchants plugin) {
+        super("Glow", plugin);
     }
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
+        if (!isEnabled()) return;
+
         if (!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof LivingEntity)) {
             return;
         }
@@ -42,11 +34,10 @@ public class GlowEnchant extends CustomEnchant {
             return;
         }
 
-        // Chance to apply glow: 50%
-        if (ThreadLocalRandom.current().nextDouble() < 0.50) {
-            // Duration: 10 seconds. PotionEffect takes ticks (20 ticks/sec).
-            int duration = 10 * 20;
-            int amplifier = 0; // Standard glow effect
+        double chance = getConfigValue(level, "chance", 0.5);
+        if (ThreadLocalRandom.current().nextDouble() < chance) {
+            int duration = getConfigValue(level, "duration", 10) * 20;
+            int amplifier = getConfigValue(level, "amplifier", 0);
 
             victim.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, duration, amplifier));
         }

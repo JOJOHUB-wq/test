@@ -1,5 +1,6 @@
 package com.customenchants.enchants;
 
+import com.customenchants.CustomEnchants;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -10,24 +11,14 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class DodgeEnchant extends CustomEnchant {
 
-    @Override
-    public String getName() {
-        return "Dodge";
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 3; // Epic enchant
-    }
-
-    @Override
-    public boolean canEnchantItem(ItemStack item) {
-        String typeName = item.getType().name();
-        return typeName.endsWith("_HELMET") || typeName.endsWith("_CHESTPLATE") || typeName.endsWith("_LEGGINGS") || typeName.endsWith("_BOOTS");
+    public DodgeEnchant(CustomEnchants plugin) {
+        super("Dodge", plugin);
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageEvent event) {
+        if (!isEnabled()) return;
+
         if (!(event.getEntity() instanceof Player)) {
             return;
         }
@@ -48,13 +39,12 @@ public class DodgeEnchant extends CustomEnchant {
             return;
         }
 
-        // Dodge chance: 1.5% per total level.
-        // E.g., a full set of level 3 (total level 12) gives an 18% dodge chance.
-        double dodgeChance = totalLevel * 0.015;
+        double dodgeChancePerLevel = getConfigValue(totalLevel, "dodge_chance_per_level", 0.015);
+        double totalDodgeChance = totalLevel * dodgeChancePerLevel;
 
-        if (ThreadLocalRandom.current().nextDouble() < dodgeChance) {
+
+        if (ThreadLocalRandom.current().nextDouble() < totalDodgeChance) {
             event.setCancelled(true);
-            // Optionally, add a sound effect or particle to indicate a successful dodge.
         }
     }
 }

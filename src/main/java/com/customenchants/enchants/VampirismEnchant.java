@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import org.bukkit.Material;
+import com.customenchants.CustomEnchants;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,23 +11,14 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class VampirismEnchant extends CustomEnchant {
 
-    @Override
-    public String getName() {
-        return "Vampirism";
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 3;
-    }
-
-    @Override
-    public boolean canEnchantItem(ItemStack item) {
-        return item.getType().name().endsWith("_SWORD");
+    public VampirismEnchant(CustomEnchants plugin) {
+        super("Vampirism", plugin);
     }
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
+        if (!isEnabled()) return;
+
         if (!(event.getDamager() instanceof Player)) {
             return;
         }
@@ -40,14 +31,12 @@ public class VampirismEnchant extends CustomEnchant {
             return;
         }
 
-        // Chance to heal: 10% per level
-        double chance = level * 0.10;
+        double chance = getConfigValue(level, "chance", 0.1);
         if (ThreadLocalRandom.current().nextDouble() < chance) {
             double currentHealth = player.getHealth();
             double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
 
-            // Heal amount: 0.5 hearts per level
-            double healAmount = level * 1.0;
+            double healAmount = getConfigValue(level, "heal_amount", 1.0);
 
             if (currentHealth + healAmount > maxHealth) {
                 player.setHealth(maxHealth);

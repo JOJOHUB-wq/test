@@ -1,5 +1,6 @@
 package com.customenchants.enchants;
 
+import com.customenchants.CustomEnchants;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -23,24 +24,14 @@ public class BulldozerEnchant extends CustomEnchant {
 
     private final Set<UUID> activeMiners = new HashSet<>();
 
-    @Override
-    public String getName() {
-        return "Bulldozer";
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 1; // Legendary, so one level is sufficient
-    }
-
-    @Override
-    public boolean canEnchantItem(ItemStack item) {
-        String typeName = item.getType().name();
-        return typeName.endsWith("_PICKAXE") || typeName.endsWith("_SHOVEL") || typeName.endsWith("_AXE");
+    public BulldozerEnchant(CustomEnchants plugin) {
+        super("Bulldozer", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
+        if (!isEnabled()) return;
+
         Player player = event.getPlayer();
         if (activeMiners.contains(player.getUniqueId())) {
             return; // Prevent recursion
@@ -55,7 +46,7 @@ public class BulldozerEnchant extends CustomEnchant {
         activeMiners.add(player.getUniqueId());
 
         try {
-            List<Block> blocksToBreak = getNearbyBlocks(event.getBlock(), player);
+            List<Block> blocksToBreak = getNearbyBlocks(event.getBlock(), player, level);
             for (Block block : blocksToBreak) {
                 if (tool.getItemMeta() instanceof Damageable) {
                     Damageable damageable = (Damageable) tool.getItemMeta();
@@ -79,12 +70,12 @@ public class BulldozerEnchant extends CustomEnchant {
         }
     }
 
-    private List<Block> getNearbyBlocks(Block centerBlock, Player player) {
+    private List<Block> getNearbyBlocks(Block centerBlock, Player player, int level) {
         List<Block> blocks = new ArrayList<>();
         BlockFace face = getPlayerBlockFace(player);
         if (face == null) return blocks;
 
-        int radius = 1; // 3x3 area
+        int radius = getConfigValue(level, "radius", 1);
 
         for (int x = -radius; x <= radius; x++) {
             for (int y = -radius; y <= radius; y++) {
@@ -100,13 +91,27 @@ public class BulldozerEnchant extends CustomEnchant {
                         relative = centerBlock.getRelative(0, y, z);
                     }
 
-                    if (relative.getType() != Material.AIR && relative.isPreferredTool(player.getInventory().getItemInMainHand())) {
+                    if (relative.getType() != Material.AIR && isApplicableTool(player.getInventory().getItemInMainHand(), relative.getType())) {
                          blocks.add(relative);
                     }
                 }
             }
         }
         return blocks;
+    }
+
+    private boolean isApplicableTool(ItemStack tool, Material block) {
+        if (tool == null) return false;
+        if (tool.getType().name().endsWith("_PICKAXE")) {
+            return block.toString().contains("ORE") || block.toString().contains("STONE") || block.toString().contains("DEEPSLATE");
+        }
+        if (tool.getType().name().endsWith("_SHOVEL")) {
+            return block == Material.SAND || block == Material.GRAVEL || block == Material.DIRT || block == Material.GRASS_BLOCK;
+        }
+        if (tool.getType().name().endsWith("_AXE")) {
+             return block.toString().endsWith("_LOG") || block.toString().endsWith("_WOOD");
+        }
+        return false;
     }
 
     private BlockFace getPlayerBlockFace(Player player) {

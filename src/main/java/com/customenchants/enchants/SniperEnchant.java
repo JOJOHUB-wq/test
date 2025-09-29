@@ -1,5 +1,6 @@
 package com.customenchants.enchants;
 
+import com.customenchants.CustomEnchants;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -21,23 +22,14 @@ public class SniperEnchant extends CustomEnchant {
     private final Map<UUID, Integer> sniperArrowsLevel = new HashMap<>();
     private final Map<UUID, Location> sniperArrowsLocation = new HashMap<>();
 
-    @Override
-    public String getName() {
-        return "Sniper";
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 3; // Epic enchant
-    }
-
-    @Override
-    public boolean canEnchantItem(ItemStack item) {
-        return item.getType() == Material.BOW || item.getType() == Material.CROSSBOW;
+    public SniperEnchant(CustomEnchants plugin) {
+        super("Sniper", plugin);
     }
 
     @EventHandler
     public void onEntityShootBow(EntityShootBowEvent event) {
+        if (!isEnabled()) return;
+
         if (!(event.getEntity() instanceof Player) || !(event.getProjectile() instanceof Arrow)) {
             return;
         }
@@ -58,6 +50,8 @@ public class SniperEnchant extends CustomEnchant {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onEntityDamageByArrow(EntityDamageByEntityEvent event) {
+        if (!isEnabled()) return;
+
         if (!(event.getDamager() instanceof Arrow) || !(event.getEntity() instanceof LivingEntity)) {
             return;
         }
@@ -75,15 +69,14 @@ public class SniperEnchant extends CustomEnchant {
 
         double distance = startLocation.distance(endLocation);
 
-        // Bonus damage: 0.05 hearts (0.1 damage) per block per level
-        double bonusDamage = distance * level * 0.1;
+        double bonusPerBlock = getConfigValue(level, "bonus_damage_per_block", 0.1);
+        double bonusDamage = distance * bonusPerBlock;
 
         event.setDamage(event.getDamage() + bonusDamage);
     }
 
     @EventHandler
     public void onProjectileHit(ProjectileHitEvent event) {
-        // Clean up the maps when the arrow lands to prevent memory leaks
         if (event.getEntity() instanceof Arrow) {
             UUID arrowId = event.getEntity().getUniqueId();
             sniperArrowsLevel.remove(arrowId);

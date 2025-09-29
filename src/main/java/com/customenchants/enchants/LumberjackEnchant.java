@@ -1,5 +1,6 @@
 package com.customenchants.enchants;
 
+import com.customenchants.CustomEnchants;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -20,28 +21,18 @@ import java.util.UUID;
 public class LumberjackEnchant extends CustomEnchant {
 
     private final Set<UUID> activeLumberjacks = new HashSet<>();
-    private static final int MAX_BLOCKS_TO_BREAK = 40;
 
-    @Override
-    public String getName() {
-        return "Lumberjack";
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 1; // Rare enchant, one level is enough
-    }
-
-    @Override
-    public boolean canEnchantItem(ItemStack item) {
-        return item.getType().name().endsWith("_AXE");
+    public LumberjackEnchant(CustomEnchants plugin) {
+        super("Lumberjack", plugin);
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
+        if (!isEnabled()) return;
+
         Player player = event.getPlayer();
         if (activeLumberjacks.contains(player.getUniqueId())) {
-            return; // Prevent recursion
+            return;
         }
 
         ItemStack tool = player.getInventory().getItemInMainHand();
@@ -57,17 +48,18 @@ public class LumberjackEnchant extends CustomEnchant {
         activeLumberjacks.add(player.getUniqueId());
 
         try {
-            Set<Block> treeBlocks = findTree(event.getBlock());
+            int maxBlocks = getConfigValue(level, "max_blocks", 40);
+            Set<Block> treeBlocks = findTree(event.getBlock(), maxBlocks);
             int blocksBroken = 0;
             for (Block block : treeBlocks) {
-                if (blocksBroken >= MAX_BLOCKS_TO_BREAK) {
+                if (blocksBroken >= maxBlocks) {
                     break;
                 }
 
                 if (tool.getItemMeta() instanceof Damageable) {
                     Damageable damageable = (Damageable) tool.getItemMeta();
                     if (damageable.getDamage() >= tool.getType().getMaxDurability()) {
-                        break; // Stop if tool breaks
+                        break;
                     }
                 }
 
@@ -82,13 +74,13 @@ public class LumberjackEnchant extends CustomEnchant {
         }
     }
 
-    private Set<Block> findTree(Block startBlock) {
+    private Set<Block> findTree(Block startBlock, int maxBlocks) {
         Set<Block> tree = new HashSet<>();
         Queue<Block> toCheck = new LinkedList<>();
         toCheck.add(startBlock);
         Material logType = startBlock.getType();
 
-        while (!toCheck.isEmpty() && tree.size() < MAX_BLOCKS_TO_BREAK * 2) { // Search a bit more than we can break
+        while (!toCheck.isEmpty() && tree.size() < maxBlocks * 2) {
             Block current = toCheck.poll();
             if (tree.contains(current) || current.getType() != logType) {
                 continue;

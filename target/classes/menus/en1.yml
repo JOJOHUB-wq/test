@@ -1,0 +1,233 @@
+id: en1
+provider: default
+type: CHEST
+size: 54
+title: '&#f89d57Зачарования для оружия'
+items:
+  sword_enchants:
+    display_name: "&#f89d57Зачарования для оружия"
+    lore:
+      - ''
+      - '&fВ этом разделе находятся'
+      - '&fразличные зачарования для оружия'
+      - ''
+      - "&#FF6600 ➥ Нажмите&#FFFFFF, чтобы перейти"
+    material: NETHERITE_SWORD
+    on_right_click:
+      commands:
+        - '[OPEN] en1'
+    on_left_click:
+      commands:
+        - '[OPEN] en1'
+
+  pickaxe_enchants:
+    display_name: "&#f89d57Зачарования для инструментов"
+    lore:
+      - ''
+      - '&fВ этом разделе находятся'
+      - '&fразличные зачарования для инструментов'
+      - ''
+      - "&#FF6600 ➥ Нажмите&#FFFFFF, чтобы перейти"
+    material: NETHERITE_PICKAXE
+    on_right_click:
+      commands:
+        - '[OPEN] en2'
+    on_left_click:
+      commands:
+        - '[OPEN] en2'
+
+  armor_enchants:
+    display_name: "&#f89d57Зачарования для брони"
+    lore:
+      - ''
+      - '&fВ этом разделе находятся'
+      - '&fразличные зачарования для брони'
+      - ''
+      - "&#FF6600 ➥ Нажмите&#FFFFFF, чтобы перейти"
+    material: NETHERITE_CHESTPLATE
+    on_right_click:
+      commands:
+        - '[OPEN] en3'
+    on_left_click:
+      commands:
+        - '[OPEN] en3'
+
+  en1:
+    display_name: "&7Окисление"
+    lore:
+      - ''
+      - '&fПри ударах ломает броню противника быстрее,'
+      - '&fно также броня ломается быстрее за счёт урона'
+      - '&fРедкость: &#EDFF43Л&#EEFF42е&#EEFF41г&#EFFF40е&#F0FF3Fн&#F1FF3Eд&#F1FF3Dа&#F2FF3Cр&#F3FF3Bн&#F3FF3Aы&#F4FF39й'
+      - '&fЗачарование на &eМеч'
+      - ''
+      - '&fМожно выбить в столе зачарования &#29FF1D✔'
+    material: ENCHANTED_BOOK
+
+  en2:
+    display_name: "&7Вампиризм"
+    lore:
+      - ''
+      - '&fПри ударах с шансом хилит вас'
+      - '&fРедкость: &#29FF1DР&#39FF2Cе&#4AFF3Aд&#5AFF49к&#6BFF57и&#7BFF66й'
+      - '&fЗачарование на &eМеч'
+      - ''
+      - '&fМожно выбить в столе зачарования &#29FF1D✔'
+    material: ENCHANTED_BOOK
+
+  en3:
+    display_name: "&7Отравление"
+    lore:
+      - ''
+      - '&fПри ударах с шансом отравляет противника'
+      - '&fРедкость: &#EDFF43Л&#EEFF42е&#EEFF41г&#EFFF40е&#F0FF3Fн&#F1FF3Eд&#F1FF3Dа&#F2FF3Cр&#F3FF3Bн&#F3FF3Aы&#F4FF39й'
+      - '&fЗачарование на &eМеч'
+      - ''
+      - '&fМожно выбить в столе зачарования &#29FF1D✔'
+    material: ENCHANTED_BOOK
+
+  en4:
+    display_name: "&7Свечение"
+    lore:
+      - ''
+      - '&fПри ударах с шансом подсвечивает противника'
+      - '&fна несколько секунд'
+      - '&fРедкость: &#EDFF43Л&#EEFF42е&#EEFF41г&#EFFF40е&#F0FF3Fн&#F1FF3Eд&#F1FF3Dа&#F2FF3Cр&#F3FF3Bн&#F3FF3Aы&#F4FF39й'
+      - '&fЗачарование на &eМеч'
+      - ''
+      - '&fМожно выбить в столе зачарования &#29FF1D✔'
+    material: ENCHANTED_BOOK
+
+  en5:
+    display_name: "&7Опытный"
+    lore:
+      - ''
+      - '&fУвеличивает получаемый опыт'
+      - '&fРедкость: &#886464Н&#8C6868е&#916C6Cо&#957070б&#9A7474ы&#9E7777ч&#A27B7Bн&#A77F7Fа&#AB8383я'
+      - '&fЗачарование на &eМеч, Кирку, Топор, Лопату,'
+      - '&eАрбалет, Лук, Трезубец, Мотыгу'
+      - ''
+      - '&fМожно выбить в столе зачарования &#29FF1D✔'
+    material: ENCHANTED_BOOK
+
+  en6:
+    display_name: "&7Охотник"
+    lore:
+      - ''
+      - '&fПозволяет стрелять стрелами на полной скорости,'
+      - '&fне снимая натяжение лука'
+      - '&fРедкость: &#E01DFFЭ&#DD26FFп&#D92FFFи&#D638FFч&#D342FFе&#CF4BFFс&#CC54FFк&#C85DFFи&#C566FFй'
+      - '&fЗачарование на &eЛук'
+      - ''
+      - '&fМожно выбить в столе зачарования &#29FF1D✔'
+    material: ENCHANTED_BOOK
+
+  en7:
+    display_name: "&7Ступор"
+    lore:
+      - ''
+      - '&fПри попадании Трезубцем с шансом'
+      - '&fналагаются негативные эффекты'
+      - '&fРедкость: &#E01DFFЭ&#DD26FFп&#D92FFFи&#D638FFч&#D342FFе&#CF4BFFс&#CC54FFк&#C85DFFи&#C566FFй'
+      - '&fЗачарование на &eТрезубец'
+      - ''
+      - '&fМожно выбить в столе зачарования &#29FF1D✔'
+    material: ENCHANTED_BOOK
+
+  en8:
+    display_name: "&7Снайпер"
+    lore:
+      - ''
+      - '&fСтрелы наносят больше урона за каждые'
+      - '&fпройденные блоки'
+      - '&fРедкость: &#E01DFFЭ&#DD26FFп&#D92FFFи&#D638FFч&#D342FFе&#CF4BFFс&#CC54FFк&#C85DFFи&#C566FFй'
+      - '&fЗачарование на &eЛук, Арбалет'
+      - ''
+      - '&fМожно выбить в столе зачарования &#29FF1D✔'
+    material: ENCHANTED_BOOK
+
+  en9:
+    display_name: "&7Ястреб"
+    lore:
+      - ''
+      - '&fВ воздухе больше урона'
+      - '&fРедкость: &#E01DFFЭ&#DD26FFп&#D92FFFи&#D638FFч&#D342FFе&#CF4BFFс&#CC54FFк&#C85DFFи&#C566FFй'
+      - '&fЗачарование на &eЛук, Арбалет'
+      - ''
+      - '&fМожно выбить в столе зачарования &#29FF1D✔'
+    material: ENCHANTED_BOOK
+
+  glass:
+    display_name: "&7"
+    material: RED_STAINED_GLASS_PANE
+
+  leave:
+    display_name: "&7"
+    lore:
+      - "&#FF6600 ➥ Нажмите&#FFFFFF, чтобы вернуться назад"
+    material: SPECTRAL_ARROW
+    on_right_click:
+      commands:
+        - '[OPEN] enchants'
+    on_left_click:
+      commands:
+        - '[OPEN] enchants'
+
+animation:
+  - tick: 1
+    opcodes:
+      - set: glass 0,8
+  - tick: 2
+    opcodes:
+      - set: glass 9,17
+  - tick: 3
+    opcodes:
+      - set: glass 36,44
+  - tick: 4
+    opcodes:
+      - set: glass 45,46
+  - tick: 5
+    opcodes:
+      - set: glass 52,53
+  - tick: 6
+    opcodes:
+      - set: sword_enchants 12
+  - tick: 7
+    opcodes:
+      - set: pickaxe_enchants 13
+  - tick: 8
+    opcodes:
+      - set: armor_enchants 14
+  - tick: 9
+    opcodes:
+      - set: en1 20
+  - tick: 10
+    opcodes:
+      - set: en2 21
+  - tick: 11
+    opcodes:
+      - set: en3 22
+  - tick: 12
+    opcodes:
+      - set: en4 23
+  - tick: 13
+    opcodes:
+      - set: en5 24
+  - tick: 14
+    opcodes:
+      - set: en6 30
+  - tick: 15
+    opcodes:
+      - set: en7 31
+  - tick: 16
+    opcodes:
+      - set: en8 32
+  - tick: 17
+    opcodes:
+      - set: en9 40
+  - tick: 18
+    opcodes:
+      - set: leave 49
+  - tick: 19
+    opcodes:
+      - set: glass 1,7
