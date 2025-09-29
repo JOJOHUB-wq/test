@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class VampirismEnchant extends CustomEnchant {
 
-    public VampirismEnchant(CustomEnchants plugin) {
+    public VampirismEnchant(AtheriumEnchants plugin) {
         super("Vampirism", plugin);
     }
 

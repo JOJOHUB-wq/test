@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -20,7 +20,7 @@ public class AutoSmeltEnchant extends CustomEnchant {
 
     private final Map<Material, Material> smeltables = new HashMap<>();
 
-    public AutoSmeltEnchant(CustomEnchants plugin) {
+    public AutoSmeltEnchant(AtheriumEnchants plugin) {
         super("AutoSmelt", plugin);
         loadSmeltMap();
     }

@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 
 public class PoisonThornsEnchant extends CustomEnchant {
 
-    public PoisonThornsEnchant(CustomEnchants plugin) {
+    public PoisonThornsEnchant(AtheriumEnchants plugin) {
         super("Poison-Thorns", plugin);
     }
 

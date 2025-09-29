@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class PoisonEnchant extends CustomEnchant {
 
-    public PoisonEnchant(CustomEnchants plugin) {
+    public PoisonEnchant(AtheriumEnchants plugin) {
         super("Poison", plugin);
     }
 

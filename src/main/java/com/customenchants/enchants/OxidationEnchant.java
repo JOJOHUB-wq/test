@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,7 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class OxidationEnchant extends CustomEnchant {
 
-    public OxidationEnchant(CustomEnchants plugin) {
+    public OxidationEnchant(AtheriumEnchants plugin) {
         super("Oxidation", plugin);
     }
 

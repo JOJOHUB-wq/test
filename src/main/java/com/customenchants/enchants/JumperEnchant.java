@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class JumperEnchant extends CustomEnchant {
 
-    public JumperEnchant(CustomEnchants plugin) {
+    public JumperEnchant(AtheriumEnchants plugin) {
         super("Jumper", plugin);
     }
 

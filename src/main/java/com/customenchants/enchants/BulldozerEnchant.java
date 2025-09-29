@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -24,7 +24,7 @@ public class BulldozerEnchant extends CustomEnchant {
 
     private final Set<UUID> activeMiners = new HashSet<>();
 
-    public BulldozerEnchant(CustomEnchants plugin) {
+    public BulldozerEnchant(AtheriumEnchants plugin) {
         super("Bulldozer", plugin);
     }
 

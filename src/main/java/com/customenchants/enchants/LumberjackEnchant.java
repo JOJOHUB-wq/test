@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -22,7 +22,7 @@ public class LumberjackEnchant extends CustomEnchant {
 
     private final Set<UUID> activeLumberjacks = new HashSet<>();
 
-    public LumberjackEnchant(CustomEnchants plugin) {
+    public LumberjackEnchant(AtheriumEnchants plugin) {
         super("Lumberjack", plugin);
     }
 

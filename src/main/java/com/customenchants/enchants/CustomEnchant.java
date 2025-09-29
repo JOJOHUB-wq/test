@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 
 public abstract class CustomEnchant implements Listener {
 
-    protected final CustomEnchants plugin;
+    protected final AtheriumEnchants plugin;
     private final String name;
     private final ConfigurationSection configSection;
 
-    public CustomEnchant(String name, CustomEnchants plugin) {
+    public CustomEnchant(String name, AtheriumEnchants plugin) {
         this.name = name;
         this.plugin = plugin;
         this.configSection = plugin.getEnchantmentConfig().getConfig().getConfigurationSection("enchantments." + name);
@@ -51,6 +51,14 @@ public abstract class CustomEnchant implements Listener {
         return getApplicableItems().contains(item.getType());
     }
 
+    public boolean isEnchantingTableEnabled() {
+        return configSection.getBoolean("enchanting_table_enabled", false);
+    }
+
+    public double getEnchantingChance() {
+        return configSection.getDouble("enchanting_chance", 0.0);
+    }
+
     public String getLore(int level) {
         return ChatColor.GRAY + getDisplayName() + " " + level;
     }
@@ -68,8 +76,11 @@ public abstract class CustomEnchant implements Listener {
         lore.add(getLore(level));
         meta.setLore(lore);
 
-        // This is a simple way to make the item glow.
-        meta.addEnchant(Enchantment.PROTECTION, 1, true);
+        // This is a simple way to make the item glow without showing the enchant.
+        if (!meta.hasEnchants()) {
+            meta.addEnchant(Enchantment.INFINITY, 1, true);
+            meta.addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ENCHANTS);
+        }
 
         item.setItemMeta(meta);
     }

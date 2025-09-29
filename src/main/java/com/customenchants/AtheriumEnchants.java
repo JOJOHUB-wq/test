@@ -1,19 +1,22 @@
 package com.customenchants;
 
-import com.customenchants.commands.EnchantsCommand;
-import com.customenchants.commands.GiveEnchantCommand;
+import com.customenchants.commands.AetheriumTabCompleter;
+import com.customenchants.commands.CommandManager;
 import com.customenchants.config.EnchantmentConfig;
+import com.customenchants.economy.EconomyManager;
 import com.customenchants.enchants.EnchantmentManager;
+import com.customenchants.listeners.AnvilListener;
 import com.customenchants.listeners.EnchantingTableListener;
 import com.customenchants.menu.MenuListener;
 import com.customenchants.menu.MenuManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class CustomEnchants extends JavaPlugin {
+public class AtheriumEnchants extends JavaPlugin {
 
     private MenuManager menuManager;
     private EnchantmentManager enchantmentManager;
     private EnchantmentConfig enchantmentConfig;
+    private EconomyManager economyManager;
 
     @Override
     public void onEnable() {
@@ -26,25 +29,27 @@ public class CustomEnchants extends JavaPlugin {
         enchantmentConfig = new EnchantmentConfig(this);
 
         // Initialize managers
+        economyManager = new EconomyManager(this);
         menuManager = new MenuManager(this);
         enchantmentManager = new EnchantmentManager(this);
 
         // Register listeners and commands
         getServer().getPluginManager().registerEvents(new MenuListener(this), this);
         getServer().getPluginManager().registerEvents(new EnchantingTableListener(this), this);
-        this.getCommand("enchants").setExecutor(new EnchantsCommand(this));
-        this.getCommand("giveenchant").setExecutor(new GiveEnchantCommand(this));
+        getServer().getPluginManager().registerEvents(new AnvilListener(this), this);
+        getCommand("ae").setExecutor(new CommandManager(this));
+        getCommand("ae").setTabCompleter(new AetheriumTabCompleter(this));
 
         // Load data
         menuManager.loadMenus();
         enchantmentManager.registerEnchants();
 
-        getLogger().info("CustomEnchants has been enabled!");
+        getLogger().info("AtheriumEnchants has been enabled!");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("CustomEnchants has been disabled!");
+        getLogger().info("AtheriumEnchants has been disabled!");
     }
 
     public MenuManager getMenuManager() {
@@ -57,5 +62,9 @@ public class CustomEnchants extends JavaPlugin {
 
     public EnchantmentConfig getEnchantmentConfig() {
         return enchantmentConfig;
+    }
+
+    public EconomyManager getEconomyManager() {
+        return economyManager;
     }
 }

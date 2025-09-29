@@ -8,17 +8,9 @@ items:
     display_name: "&#f89d57Зачарования для оружия"
     lore:
       - ''
-      - '&fВ этом разделе находятся'
-      - '&fразличные зачарования для оружия'
-      - ''
-      - "&#FF6600 ➥ Нажмите&#FFFFFF, чтобы перейти"
+      - '&fВы находитесь в этом разделе'
     material: NETHERITE_SWORD
-    on_right_click:
-      commands:
-        - '[OPEN] en1'
-    on_left_click:
-      commands:
-        - '[OPEN] en1'
+    enchanted: true # This will make the item glow
 
   pickaxe_enchants:
     display_name: "&#f89d57Зачарования для инструментов"

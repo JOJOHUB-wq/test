@@ -1,14 +1,11 @@
-name: CustomEnchants
-version: 1.0
-main: com.customenchants.CustomEnchants
+name: AtheriumEnchants
+version: 2.0
+main: com.customenchants.AtheriumEnchants
 api-version: 1.21
 author: Jules
-description: A custom enchantments plugin.
+description: A powerful and flexible custom enchantments plugin.
 commands:
-  enchants:
-    description: Opens the custom enchants menu.
-    usage: /<command>
-  giveenchant:
-    description: Gives a player a custom enchanted book.
-    usage: /<command> <player> <enchant> [level]
-    permission: customenchants.give
+  ae:
+    description: Main command for AtheriumEnchants.
+    aliases: [customenchants, ce, atheriumenchants]
+    permission: atheriumenchants.admin

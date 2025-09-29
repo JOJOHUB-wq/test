@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -22,7 +22,7 @@ public class SniperEnchant extends CustomEnchant {
     private final Map<UUID, Integer> sniperArrowsLevel = new HashMap<>();
     private final Map<UUID, Location> sniperArrowsLocation = new HashMap<>();
 
-    public SniperEnchant(CustomEnchants plugin) {
+    public SniperEnchant(AtheriumEnchants plugin) {
         super("Sniper", plugin);
     }
 

@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -22,7 +22,7 @@ public class StuporEnchant extends CustomEnchant {
             PotionEffectType.NAUSEA
     );
 
-    public StuporEnchant(CustomEnchants plugin) {
+    public StuporEnchant(AtheriumEnchants plugin) {
         super("Stupor", plugin);
     }
 

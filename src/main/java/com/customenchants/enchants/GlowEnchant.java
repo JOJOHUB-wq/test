@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GlowEnchant extends CustomEnchant {
 
-    public GlowEnchant(CustomEnchants plugin) {
+    public GlowEnchant(AtheriumEnchants plugin) {
         super("Glow", plugin);
     }
 

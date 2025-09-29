@@ -1,6 +1,6 @@
 package com.customenchants.menu;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,10 +15,10 @@ import java.util.Map;
 
 public class MenuManager {
 
-    private final CustomEnchants plugin;
+    private final AtheriumEnchants plugin;
     private final Map<String, FileConfiguration> menuConfigurations = new HashMap<>();
 
-    public MenuManager(CustomEnchants plugin) {
+    public MenuManager(AtheriumEnchants plugin) {
         this.plugin = plugin;
     }
 

@@ -1,6 +1,6 @@
 package com.customenchants.config;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -8,11 +8,11 @@ import java.io.File;
 
 public class EnchantmentConfig {
 
-    private final CustomEnchants plugin;
+    private final AtheriumEnchants plugin;
     private FileConfiguration config;
     private File configFile;
 
-    public EnchantmentConfig(CustomEnchants plugin) {
+    public EnchantmentConfig(AtheriumEnchants plugin) {
         this.plugin = plugin;
         saveDefaultConfig();
     }

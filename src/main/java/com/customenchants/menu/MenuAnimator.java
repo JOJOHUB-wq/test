@@ -1,10 +1,12 @@
 package com.customenchants.menu;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -20,7 +22,7 @@ public class MenuAnimator extends BukkitRunnable {
     private final ConfigurationSection itemsSection;
     private int tick = 1;
 
-    public MenuAnimator(Player player, Menu menu, ConfigurationSection animationSection, ConfigurationSection itemsSection, CustomEnchants plugin) {
+    public MenuAnimator(Player player, Menu menu, ConfigurationSection animationSection, ConfigurationSection itemsSection, AtheriumEnchants plugin) {
         this.player = player;
         this.menu = menu;
         this.animationSection = animationSection;
@@ -85,6 +87,10 @@ public class MenuAnimator extends BukkitRunnable {
         if (itemMeta != null) {
             itemMeta.setDisplayName(displayName);
             itemMeta.setLore(lore);
+            if (itemConfig.getBoolean("enchanted", false)) {
+                itemMeta.addEnchant(Enchantment.UNBREAKING, 1, true);
+                itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            }
             itemStack.setItemMeta(itemMeta);
         }
 

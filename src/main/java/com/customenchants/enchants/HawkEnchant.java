@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -19,7 +19,7 @@ public class HawkEnchant extends CustomEnchant {
 
     private final Map<UUID, Integer> hawkArrows = new HashMap<>();
 
-    public HawkEnchant(CustomEnchants plugin) {
+    public HawkEnchant(AtheriumEnchants plugin) {
         super("Hawk", plugin);
     }
 

@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class DodgeEnchant extends CustomEnchant {
 
-    public DodgeEnchant(CustomEnchants plugin) {
+    public DodgeEnchant(AtheriumEnchants plugin) {
         super("Dodge", plugin);
     }
 

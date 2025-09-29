@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class ExperiencedEnchant extends CustomEnchant {
 
-    public ExperiencedEnchant(CustomEnchants plugin) {
+    public ExperiencedEnchant(AtheriumEnchants plugin) {
         super("Experienced", plugin);
     }
 

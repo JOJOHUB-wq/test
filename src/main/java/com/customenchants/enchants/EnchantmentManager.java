@@ -1,6 +1,6 @@
 package com.customenchants.enchants;
 
-import com.customenchants.CustomEnchants;
+import com.customenchants.AtheriumEnchants;
 import org.bukkit.Server;
 
 import java.util.ArrayList;
@@ -8,10 +8,10 @@ import java.util.List;
 
 public class EnchantmentManager {
 
-    private final CustomEnchants plugin;
+    private final AtheriumEnchants plugin;
     private final List<CustomEnchant> registeredEnchants = new ArrayList<>();
 
-    public EnchantmentManager(CustomEnchants plugin) {
+    public EnchantmentManager(AtheriumEnchants plugin) {
         this.plugin = plugin;
     }
 
@@ -51,6 +51,15 @@ public class EnchantmentManager {
     public CustomEnchant getEnchantByName(String name) {
         for (CustomEnchant enchant : registeredEnchants) {
             if (enchant.getName().equalsIgnoreCase(name)) {
+                return enchant;
+            }
+        }
+        return null;
+    }
+
+    public CustomEnchant getEnchantByDisplayName(String displayName) {
+        for (CustomEnchant enchant : registeredEnchants) {
+            if (enchant.getDisplayName().equalsIgnoreCase(displayName)) {
                 return enchant;
             }
         }
