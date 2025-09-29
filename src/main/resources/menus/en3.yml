@@ -1,0 +1,28 @@
+id: en3
+provider: default
+type: CHEST
+size: 54
+title: '&#f89d57Зачарования для брони'
+items:
+  leave:
+    display_name: "&cНазад"
+    lore:
+      - "&#FF6600 ➥ Нажмите&#FFFFFF, чтобы вернуться"
+    material: SPECTRAL_ARROW
+    on_right_click:
+      commands:
+        - '[OPEN] enchants'
+    on_left_click:
+      commands:
+        - '[OPEN] enchants'
+  glass:
+    display_name: "&7"
+    material: CYAN_STAINED_GLASS_PANE
+
+animation:
+  - tick: 1
+    opcodes:
+      - set: glass 0-53
+  - tick: 2
+    opcodes:
+      - set: leave 49

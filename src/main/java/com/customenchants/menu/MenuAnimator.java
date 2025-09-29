@@ -1,0 +1,107 @@
+package com.customenchants.menu;
+
+import com.customenchants.CustomEnchants;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class MenuAnimator extends BukkitRunnable {
+
+    private final Player player;
+    private final Menu menu;
+    private final ConfigurationSection animationSection;
+    private final ConfigurationSection itemsSection;
+    private int tick = 1;
+
+    public MenuAnimator(Player player, Menu menu, ConfigurationSection animationSection, ConfigurationSection itemsSection, CustomEnchants plugin) {
+        this.player = player;
+        this.menu = menu;
+        this.animationSection = animationSection;
+        this.itemsSection = itemsSection;
+        this.runTaskTimer(plugin, 0L, 1L); // Run every tick
+    }
+
+    @Override
+    public void run() {
+        if (!player.getOpenInventory().getTopInventory().equals(menu.getInventory())) {
+            this.cancel();
+            return;
+        }
+
+        ConfigurationSection tickSection = animationSection.getConfigurationSection(String.valueOf(tick));
+        if (tickSection == null) {
+            if (tick > animationSection.getKeys(false).size() + 5) { // Stop a bit after last animation step
+                 this.cancel();
+            }
+            tick++;
+            return;
+        }
+
+
+        List<String> opcodes = tickSection.getStringList("opcodes");
+        for (String opcode : opcodes) {
+            String[] opcodeParts = opcode.split(":", 2);
+            if (opcodeParts.length != 2) {
+                continue;
+            }
+
+            String operation = opcodeParts[0].trim();
+            String argumentStr = opcodeParts[1].trim();
+
+            if (operation.equalsIgnoreCase("set")) {
+                String[] args = argumentStr.split("\\s+", 2);
+                if (args.length < 2) {
+                    continue;
+                }
+                String itemName = args[0];
+                String[] slots = args[1].split(",");
+                setItem(itemName, slots);
+            }
+        }
+        tick++;
+    }
+
+    private void setItem(String itemName, String[] slots) {
+        ConfigurationSection itemConfig = itemsSection.getConfigurationSection(itemName);
+        if (itemConfig == null) {
+            return;
+        }
+
+        Material material = Material.matchMaterial(itemConfig.getString("material", "STONE"));
+        String displayName = ChatColor.translateAlternateColorCodes('&', itemConfig.getString("display_name", ""));
+        List<String> lore = itemConfig.getStringList("lore").stream()
+                .map(line -> ChatColor.translateAlternateColorCodes('&', line))
+                .collect(Collectors.toList());
+
+        ItemStack itemStack = new ItemStack(material != null ? material : Material.STONE);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if (itemMeta != null) {
+            itemMeta.setDisplayName(displayName);
+            itemMeta.setLore(lore);
+            itemStack.setItemMeta(itemMeta);
+        }
+
+        for (String slotStr : slots) {
+            if (slotStr.contains("-")) {
+                String[] range = slotStr.split("-");
+                int start = Integer.parseInt(range[0]);
+                int end = Integer.parseInt(range[1]);
+                for (int i = start; i <= end; i++) {
+                    menu.getInventory().setItem(i, itemStack);
+                    menu.setSlotMapping(i, itemName);
+                }
+            } else {
+                int slot = Integer.parseInt(slotStr);
+                menu.getInventory().setItem(slot, itemStack);
+                menu.setSlotMapping(slot, itemName);
+            }
+        }
+    }
+}
