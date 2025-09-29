@@ -16,7 +16,7 @@ public class EnchantmentManager {
     }
 
     public void registerEnchants() {
-        // Register enchantments here
+        // Weapon Enchantments
         registerEnchant(new VampirismEnchant());
         registerEnchant(new PoisonEnchant());
         registerEnchant(new OxidationEnchant());
@@ -26,6 +26,16 @@ public class EnchantmentManager {
         registerEnchant(new StuporEnchant());
         registerEnchant(new SniperEnchant());
         registerEnchant(new HawkEnchant());
+
+        // Tool Enchantments
+        registerEnchant(new BulldozerEnchant());
+        registerEnchant(new AutoSmeltEnchant());
+        registerEnchant(new LumberjackEnchant());
+
+        // Armor Enchantments
+        registerEnchant(new DodgeEnchant());
+        registerEnchant(new JumperEnchant());
+        registerEnchant(new PoisonThornsEnchant());
     }
 
     private void registerEnchant(CustomEnchant enchant) {

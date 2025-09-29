@@ -4,10 +4,96 @@ type: CHEST
 size: 54
 title: '&#f89d57Зачарования для брони'
 items:
-  leave:
-    display_name: "&cНазад"
+  sword_enchants:
+    display_name: "&#f89d57Зачарования для оружия"
     lore:
-      - "&#FF6600 ➥ Нажмите&#FFFFFF, чтобы вернуться"
+      - ''
+      - '&fВ этом разделе находятся'
+      - '&fразличные зачарования для оружия'
+      - ''
+      - "&#FF6600 ➥ Нажмите&#FFFFFF, чтобы перейти"
+    material: NETHERITE_SWORD
+    on_right_click:
+      commands:
+        - '[OPEN] en1'
+    on_left_click:
+      commands:
+        - '[OPEN] en1'
+
+  pickaxe_enchants:
+    display_name: "&#f89d57Зачарования для инструментов"
+    lore:
+      - ''
+      - '&fВ этом разделе находятся'
+      - '&fразличные зачарования для инструментов'
+      - ''
+      - "&#FF6600 ➥ Нажмите&#FFFFFF, чтобы перейти"
+    material: NETHERITE_PICKAXE
+    on_right_click:
+      commands:
+        - '[OPEN] en2'
+    on_left_click:
+      commands:
+        - '[OPEN] en2'
+
+  armor_enchants:
+    display_name: "&#f89d57Зачарования для брони"
+    lore:
+      - ''
+      - '&fВ этом разделе находятся'
+      - '&fразличные зачарования для брони'
+      - ''
+      - "&#FF6600 ➥ Нажмите&#FFFFFF, чтобы перейти"
+    material: NETHERITE_CHESTPLATE
+    on_right_click:
+      commands:
+        - '[OPEN] en3'
+    on_left_click:
+      commands:
+        - '[OPEN] en3'
+
+  en1:
+    display_name: "&7Уклонение"
+    lore:
+      - ''
+      - '&fБроня может иногда пропускать урон'
+      - '&fРедкость: &#E01DFFЭ&#DD26FFп&#D92FFFи&#D638FFч&#D342FFе&#CF4BFFс&#CC54FFк&#C85DFFи&#C566FFй'
+      - '&fЗачарование на &eШлем, Нагрудник, Поножи, Ботинки'
+      - ''
+      - '&fМожно выбить в столе зачарования &#29FF1D✔'
+    material: ENCHANTED_BOOK
+
+  en2:
+    display_name: "&7Попрыгун"
+    lore:
+      - ''
+      - '&fДвойной прыжок'
+      - '&fРедкость: &#E01DFFЭ&#DD26FFп&#D92FFFи&#D638FFч&#D342FFе&#CF4BFFс&#CC54FFк&#C85DFFи&#C566FFй'
+      - '&fЗачарование на &eБотинки'
+      - ''
+      - '&fМожно выбить в столе зачарования &#29FF1D✔'
+    material: ENCHANTED_BOOK
+
+  en3:
+    display_name: "&7Ядо-шипы"
+    lore:
+      - ''
+      - '&fОтравляет атакующих на несколько секунд за'
+      - '&fкаждое сердце нанесенного урона, до нескольких секунд'
+      - '&fРедкость: &#E01DFFЭ&#DD26FFп&#D92FFFи&#D638FFч&#D342FFе&#CF4BFFс&#CC54FFк&#C85DFFи&#C566FFй'
+      - '&fЗачарование на &eБотинки'
+      - ''
+      - '&fМожно выбить в столе зачарования &#29FF1D✔'
+    material: ENCHANTED_BOOK
+
+  glass:
+    display_name: "&7"
+    material: RED_STAINED_GLASS_PANE
+
+  leave:
+    display_name: "&7"
+    lore:
+      - "&#FF6600 ➥ Нажмите&#FFFFFF, чтобы вернуться назад"
     material: SPECTRAL_ARROW
     on_right_click:
       commands:
@@ -15,14 +101,44 @@ items:
     on_left_click:
       commands:
         - '[OPEN] enchants'
-  glass:
-    display_name: "&7"
-    material: CYAN_STAINED_GLASS_PANE
 
 animation:
   - tick: 1
     opcodes:
-      - set: glass 0-53
+      - set: glass 0,8
   - tick: 2
     opcodes:
+      - set: glass 9,17
+  - tick: 3
+    opcodes:
+      - set: glass 36,44
+  - tick: 4
+    opcodes:
+      - set: glass 45,46
+  - tick: 5
+    opcodes:
+      - set: glass 52,53
+  - tick: 6
+    opcodes:
+      - set: sword_enchants 12
+  - tick: 7
+    opcodes:
+      - set: pickaxe_enchants 13
+  - tick: 8
+    opcodes:
+      - set: armor_enchants 14
+  - tick: 9
+    opcodes:
+      - set: en1 21
+  - tick: 10
+    opcodes:
+      - set: en2 22
+  - tick: 11
+    opcodes:
+      - set: en3 23
+  - tick: 12
+    opcodes:
       - set: leave 49
+  - tick: 13
+    opcodes:
+      - set: glass 1,7
