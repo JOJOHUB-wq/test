@@ -69,7 +69,7 @@ public abstract class CustomEnchant implements Listener {
         meta.setLore(lore);
 
         // This is a simple way to make the item glow.
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        meta.addEnchant(Enchantment.PROTECTION, 1, true);
 
         item.setItemMeta(meta);
     }

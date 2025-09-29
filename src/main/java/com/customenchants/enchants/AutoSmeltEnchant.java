@@ -59,7 +59,7 @@ public class AutoSmeltEnchant extends CustomEnchant {
             return;
         }
 
-        int fortuneLevel = tool.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
+        int fortuneLevel = tool.getEnchantmentLevel(Enchantment.FORTUNE);
         int amountToDrop = 1;
         if (fortuneLevel > 0) {
             if (ThreadLocalRandom.current().nextInt(100) < (fortuneLevel * 25)) {

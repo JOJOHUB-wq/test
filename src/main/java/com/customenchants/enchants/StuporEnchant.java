@@ -17,9 +17,9 @@ import java.util.concurrent.ThreadLocalRandom;
 public class StuporEnchant extends CustomEnchant {
 
     private static final List<PotionEffectType> NEGATIVE_EFFECTS = Arrays.asList(
-            PotionEffectType.SLOW,
+            PotionEffectType.SLOWNESS,
             PotionEffectType.WEAKNESS,
-            PotionEffectType.CONFUSION
+            PotionEffectType.NAUSEA
     );
 
     public StuporEnchant(CustomEnchants plugin) {
