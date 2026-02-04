@@ -21,7 +21,7 @@ public class MessageService {
             msg = config.getString("en." + key);
         }
         if (msg == null) {
-            return key; // Return key if missing
+            return key;
         }
         return MessageFormat.format(msg, args);
     }

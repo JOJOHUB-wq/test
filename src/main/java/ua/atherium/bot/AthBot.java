@@ -528,7 +528,7 @@ public class AthBot extends TelegramLongPollingBot {
             return;
         }
 
-        DatabaseManager.UserSettings settings = db.getUserSettings(userId); // Use requester's BG
+        DatabaseManager.UserSettings settings = db.getUserSettings(userId);
         File graph = graphGen.generateCompareGraph("Comparison", data, settings.graphBg());
 
         if (graph != null) {

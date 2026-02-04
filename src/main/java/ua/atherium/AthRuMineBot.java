@@ -46,7 +46,7 @@ public class AthRuMineBot extends JavaPlugin {
         scanner = new NetworkScanner(db, getConfig(), getLogger());
         scanner.start();
 
-        new StatCollector(db, getLogger()).runTaskTimerAsynchronously(this, 200L, 12000L); // Delay 10s start
+        new StatCollector(db, getLogger()).runTaskTimerAsynchronously(this, 200L, 12000L);
 
         getLogger().info("AthRuMineBot enabled!");
     }

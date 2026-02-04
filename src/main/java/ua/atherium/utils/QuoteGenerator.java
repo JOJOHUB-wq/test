@@ -62,7 +62,7 @@ public class QuoteGenerator {
             g2d.setFont(new Font("SansSerif", Font.ITALIC, 16));
             g2d.setColor(Color.GRAY);
             g2d.drawString(signature, width - padding - g2d.getFontMetrics().stringWidth(signature), y + 40);
-            y += 40; // Add space for signature
+            y += 40;
         }
 
         g2d.dispose();

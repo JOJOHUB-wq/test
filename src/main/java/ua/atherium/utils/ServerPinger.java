@@ -16,7 +16,7 @@ public class ServerPinger {
         public boolean online;
         public String version;
         public String motd;
-        public String favicon; // Base64
+        public String favicon;
         public int players;
         public int maxPlayers;
         public long latency;
@@ -126,8 +126,8 @@ public class ServerPinger {
             int textIndex = json.indexOf("\"text\"", start);
             if (textIndex != -1) {
                 int textColon = json.indexOf(":", textIndex);
-                int textStart = json.indexOf("\"", textColon) + 1; // Start quote
-                int textEnd = json.indexOf("\"", textStart); // End quote
+                int textStart = json.indexOf("\"", textColon) + 1;
+                int textEnd = json.indexOf("\"", textStart);
                 return json.substring(textStart, textEnd);
             }
         }

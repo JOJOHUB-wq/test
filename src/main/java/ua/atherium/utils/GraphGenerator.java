@@ -63,12 +63,12 @@ public class GraphGenerator {
                 "Time",
                 "Online",
                 dataset,
-                true, // Legend
+                true,
                 false,
                 false
         );
 
-        customizeChart(chart, null, bgUrl); // Default colors for compare
+        customizeChart(chart, null, bgUrl);
 
         return saveChart(chart);
     }
