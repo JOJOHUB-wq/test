@@ -1,0 +1,14 @@
+# Токен вашего Telegram бота
+# Получить можно у @BotFather
+bot-token: "8546490019:AAEXxkoTdcODHSgLGpdhsCUcU4PgVRRcuHc"
+
+# Настройки сетевого сканера
+scanner:
+  enabled: true
+  threads: 4
+  ips-per-minute: 500
+  timeout-ms: 2000
+  ranges:
+    - "178.0.0.0-178.255.255.255"
+    - "185.0.0.0-185.255.255.255"
+    - "5.0.0.0-5.255.255.255"

@@ -1,0 +1,263 @@
+ru:
+  welcome_message: "Привет! Я бот для мониторинга Minecraft серверов."
+  server_added: "✅ Сервер {0} успешно добавлен."
+  server_removed: "✅ Сервер {0} удален."
+  server_not_found: "❌ Сервер не найден."
+  ping_online: "🟢 Сервер {0} онлайн\n📊 Онлайн: {1}/{2}\n🎮 Версия: {3}\n⏱ Пинг: {4}ms"
+  ping_offline: "🔴 Сервер {0} недоступен\n❌ Причина: {1}"
+  error_invalid_format: "❌ Неверный формат. Пример: {0}"
+  server_already_exists: "❌ Сервер уже добавлен."
+  alias_set: "✅ Алиас {0} установлен для {1}."
+  stats_header: "📊 Статистика {0}"
+  top_header: "🏆 Топ серверов РуМК (страница {0}):"
+  top_entry: "{0}. {1} - {2} игроков"
+  notify_on: "🔔 Уведомления включены."
+  notify_off: "🔕 Уведомления выключены."
+  autostat_on: "✅ Автостатистика включена."
+  autostat_off: "❌ Автостатистика выключена."
+  quote_generated: "✅ Цитата создана."
+  players_list: "👥 Игроки на {0}: {1}"
+  graph_color_changed: "✅ Цвет графика изменен."
+  graph_bg_changed: "✅ Фон графика изменен."
+  signature_changed: "✅ Подпись изменена."
+  lang_changed: "✅ Язык изменен на Русский."
+  help_text: |
+    📋 Список команд:
+    ✏️ добавить <ip> - добавить сервер
+    ✏️ удалить <ip> - удалить сервер
+    ✏️ пинг <ip> - проверить статус
+    ✏️ алиас <ip> <имя> - установить имя
+    ✏️ стата [ip] - график онлайна
+    ✏️ топ - топ серверов
+    ✏️ автодоб - список для добавления
+    ✏️ уведомления - вкл/выкл уведомления
+    ✏️ автостата - статистика в ЛС
+    ✏️ цитата - создать цитату (нужно переслать сообщение)
+    👑 неделя [ip] - статистика за неделю
+    👑 сумма - суммарная статистика
+    👑 игроки <ip> - список игроков
+    👑 сравнить <ip1> <ip2> - сравнение
+    👑 график <цвет> - цвет графика
+    👑 график фон <url> - фон графика
+    👑 подпись <текст> - подпись для цитат
+    🌐 lang <код> - сменить язык
+
+en:
+  welcome_message: "Hello! I am a Minecraft server monitoring bot."
+  server_added: "✅ Server {0} successfully added."
+  server_removed: "✅ Server {0} removed."
+  server_not_found: "❌ Server not found."
+  ping_online: "🟢 Server {0} Online\n📊 Online: {1}/{2}\n🎮 Version: {3}\n⏱ Ping: {4}ms"
+  ping_offline: "🔴 Server {0} Offline\n❌ Reason: {1}"
+  error_invalid_format: "❌ Invalid format. Example: {0}"
+  server_already_exists: "❌ Server already exists."
+  alias_set: "✅ Alias {0} set for {1}."
+  stats_header: "📊 Statistics {0}"
+  top_header: "🏆 Top Servers (Page {0}):"
+  top_entry: "{0}. {1} - {2} players"
+  notify_on: "🔔 Notifications enabled."
+  notify_off: "🔕 Notifications disabled."
+  autostat_on: "✅ Autostats enabled."
+  autostat_off: "❌ Autostats disabled."
+  quote_generated: "✅ Quote generated."
+  players_list: "👥 Players on {0}: {1}"
+  graph_color_changed: "✅ Graph color changed."
+  graph_bg_changed: "✅ Graph background changed."
+  signature_changed: "✅ Signature changed."
+  lang_changed: "✅ Language changed to English."
+  help_text: |
+    📋 Command List:
+    ✏️ add <ip> - add server
+    ✏️ delete <ip> - remove server
+    ✏️ ping <ip> - check status
+    ✏️ alias <ip> <name> - set alias
+    ✏️ stats [ip] - online graph
+    ✏️ top - top servers
+    ✏️ autoadd - list to add
+    ✏️ notify - toggle notifications
+    ✏️ autostat - daily stats
+    ✏️ quote - create quote (reply to msg)
+    👑 week [ip] - weekly stats
+    👑 sum - summary stats
+    👑 players <ip> - player list
+    👑 compare <ip1> <ip2> - compare
+    👑 graph <color> - graph color
+    👑 graph bg <url> - graph background
+    👑 signature <text> - quote signature
+    🌐 lang <code> - change language
+
+ua:
+  welcome_message: "Привіт! Я бот для моніторингу Minecraft серверів."
+  server_added: "✅ Сервер {0} успішно додано."
+  server_removed: "✅ Сервер {0} видалено."
+  server_not_found: "❌ Сервер не знайдено."
+  ping_online: "🟢 Сервер {0} онлайн\n📊 Онлайн: {1}/{2}\n🎮 Версія: {3}\n⏱ Пінг: {4}ms"
+  ping_offline: "🔴 Сервер {0} недоступний\n❌ Причина: {1}"
+  error_invalid_format: "❌ Невірний формат. Приклад: {0}"
+  server_already_exists: "❌ Сервер вже додано."
+  alias_set: "✅ Аліас {0} встановлено для {1}."
+  stats_header: "📊 Статистика {0}"
+  top_header: "🏆 Топ серверів (Сторінка {0}):"
+  top_entry: "{0}. {1} - {2} гравців"
+  notify_on: "🔔 Сповіщення увімкнено."
+  notify_off: "🔕 Сповіщення вимкнено."
+  autostat_on: "✅ Автостатистика увімкнена."
+  autostat_off: "❌ Автостатистика вимкнена."
+  quote_generated: "✅ Цитата створена."
+  players_list: "👥 Гравці на {0}: {1}"
+  graph_color_changed: "✅ Колір графіка змінено."
+  graph_bg_changed: "✅ Фон графіка змінено."
+  signature_changed: "✅ Підпис змінено."
+  lang_changed: "✅ Мову змінено на Українську."
+  help_text: |
+    📋 Список команд:
+    ✏️ додати <ip> - додати сервер
+    ✏️ видалити <ip> - видалити сервер
+    ✏️ пінг <ip> - перевірити статус
+    ✏️ аліас <ip> <ім'я> - встановити ім'я
+    ✏️ стата [ip] - графік онлайну
+    ✏️ топ - топ серверів
+    ✏️ автодоб - список для додавання
+    ✏️ сповіщення - вкл/викл сповіщення
+    ✏️ автостата - статистика в ПП
+    ✏️ цитата - створити цитату (треба переслати повідомлення)
+    👑 тиждень [ip] - статистика за тиждень
+    👑 сума - сумарна статистика
+    👑 гравці <ip> - список гравців
+    👑 порівняти <ip1> <ip2> - порівняння
+    👑 графік <колір> - колір графіка
+    👑 графік фон <url> - фон графіка
+    👑 підпис <текст> - підпис для цитат
+    🌐 lang <код> - змінити мову
+
+de:
+  welcome_message: "Hallo! Ich bin ein Minecraft-Server-Überwachungsbot."
+  server_added: "✅ Server {0} erfolgreich hinzugefügt."
+  server_removed: "✅ Server {0} entfernt."
+  server_not_found: "❌ Server nicht gefunden."
+  ping_online: "🟢 Server {0} Online\n📊 Online: {1}/{2}\n🎮 Version: {3}\n⏱ Ping: {4}ms"
+  ping_offline: "🔴 Server {0} Offline\n❌ Grund: {1}"
+  error_invalid_format: "❌ Ungültiges Format. Beispiel: {0}"
+  server_already_exists: "❌ Server existiert bereits."
+  alias_set: "✅ Alias {0} für {1} gesetzt."
+  stats_header: "📊 Statistik {0}"
+  top_header: "🏆 Top Server (Seite {0}):"
+  top_entry: "{0}. {1} - {2} Spieler"
+  notify_on: "🔔 Benachrichtigungen aktiviert."
+  notify_off: "🔕 Benachrichtigungen deaktiviert."
+  autostat_on: "✅ Autostats aktiviert."
+  autostat_off: "❌ Autostats deaktiviert."
+  quote_generated: "✅ Zitat erstellt."
+  players_list: "👥 Spieler auf {0}: {1}"
+  graph_color_changed: "✅ Diagrammfarbe geändert."
+  graph_bg_changed: "✅ Diagrammhintergrund geändert."
+  signature_changed: "✅ Signatur geändert."
+  lang_changed: "✅ Sprache auf Deutsch geändert."
+  help_text: |
+    📋 Befehlsliste:
+    ✏️ add <ip> - Server hinzufügen
+    ✏️ delete <ip> - Server entfernen
+    ✏️ ping <ip> - Status prüfen
+    ✏️ alias <ip> <name> - Alias setzen
+    ✏️ stats [ip] - Online-Grafik
+    ✏️ top - Top Server
+    ✏️ autoadd - Liste zum Hinzufügen
+    ✏️ notify - Benachrichtigungen umschalten
+    ✏️ autostat - Tägliche Statistik
+    ✏️ quote - Zitat erstellen
+    👑 week [ip] - Wochenstatistik
+    👑 sum - Gesamtstatistik
+    👑 players <ip> - Spielerliste
+    👑 compare <ip1> <ip2> - Vergleichen
+    👑 graph <color> - Grafikfarbe
+    👑 graph bg <url> - Grafikhintergrund
+    👑 signature <text> - Signatur
+    🌐 lang <code> - Sprache ändern
+
+kz:
+  welcome_message: "Сәлем! Мен Minecraft серверлерін бақылау ботымын."
+  server_added: "✅ Сервер {0} сәтті қосылды."
+  server_removed: "✅ Сервер {0} жойылды."
+  server_not_found: "❌ Сервер табылмады."
+  ping_online: "🟢 Сервер {0} онлайн\n📊 Онлайн: {1}/{2}\n🎮 Нұсқа: {3}\n⏱ Пинг: {4}ms"
+  ping_offline: "🔴 Сервер {0} қолжетімсіз\n❌ Себебі: {1}"
+  error_invalid_format: "❌ Қате пішім. Мысалы: {0}"
+  server_already_exists: "❌ Сервер қазірдің өзінде бар."
+  alias_set: "✅ Алиас {0} орнатылды {1} үшін."
+  stats_header: "📊 Статистика {0}"
+  top_header: "🏆 Үздік серверлер (Бет {0}):"
+  top_entry: "{0}. {1} - {2} ойыншы"
+  notify_on: "🔔 Хабарландырулар қосылды."
+  notify_off: "🔕 Хабарландырулар өшірілді."
+  autostat_on: "✅ Автостат қосылды."
+  autostat_off: "❌ Автостат өшірілді."
+  quote_generated: "✅ Дәйексөз жасалды."
+  players_list: "👥 {0} ойыншылары: {1}"
+  graph_color_changed: "✅ График түсі өзгертілді."
+  graph_bg_changed: "✅ График фон өзгертілді."
+  signature_changed: "✅ Қолтаңба өзгертілді."
+  lang_changed: "✅ Тіл қазақшаға ауыстырылды."
+  help_text: |
+    📋 Пәрмендер тізімі:
+    ✏️ add <ip> - сервер қосу
+    ✏️ delete <ip> - сервер жою
+    ✏️ ping <ip> - күйін тексеру
+    ✏️ alias <ip> <аты> - алиас орнату
+    ✏️ stats [ip] - онлайн графигі
+    ✏️ top - үздік серверлер
+    ✏️ autoadd - қосу тізімі
+    ✏️ notify - хабарландыру
+    ✏️ autostat - күнделікті статистика
+    ✏️ quote - дәйексөз жасау
+    👑 week [ip] - апталық статистика
+    👑 sum - жалпы статистика
+    👑 players <ip> - ойыншылар тізімі
+    👑 compare <ip1> <ip2> - салыстыру
+    👑 graph <түс> - график түсі
+    👑 graph bg <url> - график фон
+    👑 signature <мәтін> - қолтаңба
+    🌐 lang <код> - тілді өзгерту
+
+by:
+  welcome_message: "Прывітанне! Я бот для маніторынгу Minecraft сервераў."
+  server_added: "✅ Сервер {0} паспяхова дададзены."
+  server_removed: "✅ Сервер {0} выдалены."
+  server_not_found: "❌ Сервер не знойдзены."
+  ping_online: "🟢 Сервер {0} анлайн\n📊 Анлайн: {1}/{2}\n🎮 Версія: {3}\n⏱ Пінг: {4}ms"
+  ping_offline: "🔴 Сервер {0} недаступны\n❌ Прычына: {1}"
+  error_invalid_format: "❌ Няправільны фармат. Прыклад: {0}"
+  server_already_exists: "❌ Сервер ужо дададзены."
+  alias_set: "✅ Аліас {0} усталяваны для {1}."
+  stats_header: "📊 Статыстыка {0}"
+  top_header: "🏆 Топ сервераў (Старонка {0}):"
+  top_entry: "{0}. {1} - {2} гульцоў"
+  notify_on: "🔔 Апавяшчэнні ўключаны."
+  notify_off: "🔕 Апавяшчэнні выключаны."
+  autostat_on: "✅ Аўтастатыстыка ўключана."
+  autostat_off: "❌ Аўтастатыстыка выключана."
+  quote_generated: "✅ Цытата створана."
+  players_list: "👥 Гульцы на {0}: {1}"
+  graph_color_changed: "✅ Колер графіка зменены."
+  graph_bg_changed: "✅ Фон графіка зменены."
+  signature_changed: "✅ Подпіс зменены."
+  lang_changed: "✅ Мова зменена на Беларускую."
+  help_text: |
+    📋 Спіс каманд:
+    ✏️ add <ip> - дадаць сервер
+    ✏️ delete <ip> - выдаліць сервер
+    ✏️ ping <ip> - праверыць статус
+    ✏️ alias <ip> <імя> - усталяваць імя
+    ✏️ stats [ip] - графік анлайна
+    ✏️ top - топ сервераў
+    ✏️ autoadd - спіс для дадання
+    ✏️ notify - укл/выкл апавяшчэнні
+    ✏️ autostat - статыстыка ў ЛС
+    ✏️ quote - стварыць цытату
+    👑 week [ip] - статыстыка за тыдзень
+    👑 sum - сумарная статыстыка
+    👑 players <ip> - спіс гульцоў
+    👑 compare <ip1> <ip2> - параўнанне
+    👑 graph <колер> - колер графіка
+    👑 graph bg <url> - фон графіка
+    👑 signature <тэкст> - подпіс
+    🌐 lang <код> - змяніць мову
