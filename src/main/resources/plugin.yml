@@ -1,0 +1,8 @@
+name: AthRuMineBot
+version: 1.0-SNAPSHOT
+main: ua.atherium.AthRuMineBot
+api-version: 1.16
+author: atheriumGPT
+commands:
+  # Plugin doesn't use in-game commands, but this is required for plugin.yml validation sometimes or just good practice
+permissions:
