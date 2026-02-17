@@ -11,7 +11,6 @@ items:
     lore:
       - "&7Блокирует телепорты в радиусе"
       - "&e15 блоков &7на &e15 секунд"
-      - ""
       - "&cКулдаун: 30 секунд"
     cooldown: 30
     effects:
@@ -22,12 +21,18 @@ items:
         level: 2
         duration: 15
         radius: 15
-    sound: ENTITY_BLAZE_SHOOT
-    particle: FLAME
     obtain:
       - events
       - /shop
-    price: 5000
+      - craft
+    craft_recipe:
+      shape:
+        - "FFF"
+        - "FEF"
+        - "FFF"
+      ingredients:
+        F: FIRE_CHARGE
+        E: ENDER_PEARL
 
   snowball:
     type: COMBAT
@@ -44,11 +49,9 @@ items:
       slowness:
         duration: 10
         level: 2
-    sound: ENTITY_SNOWBALL_THROW
     obtain:
       - craft
       - events
-    price: 1000
 
   jack_o_lantern:
     type: COMBAT
@@ -58,7 +61,6 @@ items:
       - "&7ПКМ: Подсвечивает игроков"
       - "&7и надевает тыкву на голову"
       - "&7тем, у кого нет шлема"
-      - ""
       - "&cКулдаун: 45 секунд"
     cooldown: 45
     effects:
@@ -68,12 +70,9 @@ items:
       pumpkin_helmet:
         duration: 15
         require_no_helmet: true
-    sound: BLOCK_PUMPKIN_CARVE
-    particle: VILLAGER_HAPPY
     obtain:
       - events
       - /shop
-    price: 8000
 
   explosive_rod:
     type: COMBAT
@@ -82,18 +81,15 @@ items:
     lore:
       - "&7Выстреливает огненным зарядом"
       - "&7Урон: &e3 HP"
-      - ""
       - "&cКулдаун: 5 секунд"
     cooldown: 5
     effects:
       shoot_fireball:
         damage: 3.0
         speed: 2.0
-    sound: ENTITY_GHAST_SHOOT
     obtain:
       - craft
       - events
-    price: 3000
 
   echo_shard:
     type: COMBAT
@@ -102,19 +98,15 @@ items:
     lore:
       - "&7Отбрасывает всех игроков"
       - "&7в радиусе &e10 блоков"
-      - ""
       - "&cКулдаун: 60 секунд"
     cooldown: 60
     effects:
       knockback:
         radius: 10
         strength: 2.5
-    sound: ENTITY_WARDEN_SONIC_BOOM
-    particle: SONIC_BOOM
     obtain:
       - events
       - /shop
-    price: 15000
 
   explosive_thing:
     type: COMBAT
@@ -123,7 +115,6 @@ items:
     lore:
       - "&7Создает направленный взрыв"
       - "&7Дальность: &e15 блоков"
-      - ""
       - "&cКулдаун: 20 секунд"
     cooldown: 20
     effects:
@@ -131,11 +122,9 @@ items:
         power: 3.0
         range: 15
         fire: false
-    sound: ENTITY_TNT_PRIMED
     obtain:
       - craft
       - events
-    price: 5000
 
   # ═══ ЛОВУШКИ ═══
   trap:
@@ -145,7 +134,6 @@ items:
     lore:
       - "&7Создает куб 3x3x3 из блоков"
       - "&7Длительность: &e30 секунд"
-      - ""
       - "&cКулдаун: 45 секунд"
       - "&7Материал настраивается в &e/custom"
     cooldown: 45
@@ -154,12 +142,10 @@ items:
         size: 3
         duration: 30
         material: "player_choice" # Set via /custom
-    sound: BLOCK_COBWEB_PLACE
     region_check: true
     obtain:
       - craft
       - events
-    price: 4000
 
   explosive_trap:
     type: TRAP
@@ -169,24 +155,21 @@ items:
       - "&7На земле: структура 5x5x3"
       - "&7В воде: стеклянная сфера r=5"
       - "&7Длительность: &e45 секунд"
-      - ""
       - "&cКулдаун: 60 секунд"
     cooldown: 60
     effects:
       land_structure:
-        size: [gist.github](https://gist.github.com/kangarko/456d9cfce52dc971b93dbbd12a95f43c)
+        size: [5, 5, 3]
         material: OBSIDIAN
         duration: 45
       water_sphere:
         radius: 5
         material: GLASS
         duration: 45
-    sound: BLOCK_ANVIL_LAND
     region_check: true
     obtain:
       - events
       - /shop
-    price: 10000
 
   # ═══ УТИЛИТАРНЫЕ ПРЕДМЕТЫ ═══
   experience_bubble:
@@ -196,17 +179,13 @@ items:
     lore:
       - "&7Мгновенно чинит всю броню"
       - "&7с зачарованием Починка"
-      - ""
       - "&eОдноразовое использование"
     effects:
       repair_mending_armor: true
-    sound: ENTITY_EXPERIENCE_ORB_PICKUP
-    particle: HAPPY_VILLAGER
     consume: true
     obtain:
       - events
       - /shop
-    price: 2000
 
   fast_furnace:
     type: UTILITY
@@ -218,12 +197,10 @@ items:
     effects:
       speed_multiplier: 3.0
       fuel_efficiency: 1.5
-    sound: BLOCK_FURNACE_FIRE_CRACKLE
     placeable: true
     obtain:
       - craft
       - /shop
-    price: 15000
 
   golden_spawner:
     type: UTILITY
@@ -232,7 +209,6 @@ items:
     lore:
       - "&7Генерирует &e10-50 монет"
       - "&7каждые &e5 минут"
-      - ""
       - "&eПрочность: &a{durability}%"
       - "&7Может сломаться!"
     effects:
@@ -244,14 +220,11 @@ items:
       durability:
         min: 0
         max: 100
-    sound: BLOCK_BEACON_ACTIVATE
-    particle: VILLAGER_HAPPY
     placeable: true
     broadcast_coords: true
     obtain:
       - events
       - /shop
-    price: 50000
 
   special_compass:
     type: UTILITY
@@ -260,17 +233,14 @@ items:
     lore:
       - "&7ПКМ: Узнать координаты"
       - "&7случайной сокровищницы"
-      - ""
       - "&cКулдаун: 8 часов"
       - "&eСледующее использование: {time}"
     cooldown: 28800 # 8 hours
     effects:
       show_treasure_coords: true
-    sound: ITEM_LODESTONE_COMPASS_LOCK
     obtain:
       - events
       - /shop
-    price: 100000
 
   universal_key:
     type: UTILITY
@@ -279,7 +249,6 @@ items:
     lore:
       - "&7Открывает особые подземелья"
       - "&7и призывает боссов"
-      - ""
       - "&eОдноразовое использование"
     effects:
       open_dungeon: true
@@ -288,11 +257,23 @@ items:
           - WITHER
           - WARDEN
           - ELDER_GUARDIAN
-    sound: BLOCK_TRIAL_SPAWNER_OPEN_SHUTTER
     consume: true
     obtain:
       - events
-    price: 200000
+
+  auto_crafter:
+    type: UTILITY
+    material: DISPENSER
+    name: "&7Авто-крафтер" # Will be renamed by player
+    lore:
+      - "&7Автоматически крафтит предметы"
+      - "&7Скорость: &e1 крафт / 3 сек"
+    effects:
+      auto_craft:
+        speed: 3
+    placeable: true
+    obtain:
+      - craft
 
   jack_pickaxe:
     type: UTILITY
@@ -301,7 +282,6 @@ items:
     lore:
       - "&7Позволяет добывать спавнеры"
       - "&7без их разрушения"
-      - ""
       - "&9Эффективность X"
       - "&9Неразрушимость V"
       - "&9Починка"
@@ -314,7 +294,6 @@ items:
     durability: 5000
     obtain:
       - /shop
-    price: 500000
 
   unbreakable_elytra:
     type: UTILITY
@@ -326,7 +305,6 @@ items:
     obtain:
       - events
       - /shop
-    price: 100000
 
   armored_elytra:
     type: UTILITY
@@ -342,7 +320,6 @@ items:
     enchantment_glow: true
     obtain:
       - events
-    price: 250000
 
   mysterious_spawn_egg:
     type: UTILITY
@@ -370,7 +347,6 @@ items:
             name: "&dЭндер-крипер"
     obtain:
       - events
-    price: 75000
 
   emerald_dust:
     type: UTILITY
@@ -384,7 +360,6 @@ items:
     craft_amount: 9
     obtain:
       - craft
-    price: 100
 
   sun_helmet:
     type: UTILITY
@@ -394,7 +369,6 @@ items:
       - "&7Защита: &e+3"
       - "&7Прочность: &e+3"
       - "&7Сопротивление отбросу: &e+0.1"
-      - ""
       - "&9Защита V"
       - "&9Неразрушимость V"
     enchantments:
@@ -409,7 +383,6 @@ items:
     obtain:
       - events
       - /shop
-    price: 150000
 
   zombified_helmet:
     type: UTILITY
@@ -419,10 +392,8 @@ items:
       - "&7Защита: &e+3"
       - "&7Прочность: &e+3"
       - "&7Сопротивление отбросу: &e+0.1"
-      - ""
       - "&9Защита V"
       - "&9Неразрушимость V"
-      - ""
       - "&7Версия: &e1.20+"
     enchantments:
       PROTECTION: 5
@@ -435,4 +406,3 @@ items:
     minecraft_version: "1.20"
     obtain:
       - events
-    price: 150000

@@ -1,61 +1,46 @@
 package ua.atherium.holyitems.managers;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.flags.Flags;
+import com.sk89q.worldguard.protection.regions.RegionQuery;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
+import ua.atherium.holyitems.HolyWorldItems;
 
 public class RegionManager {
 
-    private final JavaPlugin plugin;
-    private Object wgHandler;
-    private Object gpHandler;
+    private final HolyWorldItems plugin;
+    private final boolean worldGuardEnabled;
+    private final boolean griefPreventionEnabled;
 
-    public RegionManager(JavaPlugin plugin) {
+    public RegionManager(HolyWorldItems plugin) {
         this.plugin = plugin;
-        if (plugin.getServer().getPluginManager().getPlugin("WorldGuard") != null) {
-            try {
-                wgHandler = new WorldGuardHandler();
-            } catch (Throwable t) {
-                plugin.getLogger().warning("Failed to initialize WorldGuard support: " + t.getMessage());
-            }
-        }
-        if (plugin.getServer().getPluginManager().getPlugin("GriefPrevention") != null) {
-            try {
-                gpHandler = new GriefPreventionHandler();
-            } catch (Throwable t) {
-                plugin.getLogger().warning("Failed to initialize GriefPrevention support: " + t.getMessage());
-            }
-        }
+        this.worldGuardEnabled = plugin.getServer().getPluginManager().isPluginEnabled("WorldGuard");
+        this.griefPreventionEnabled = plugin.getServer().getPluginManager().isPluginEnabled("GriefPrevention");
     }
 
     public boolean canBuild(Player player, Location location) {
-        if (player.hasPermission("holyitems.bypass-region")) return true;
+        if (worldGuardEnabled) {
+            RegionQuery query = WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery();
+            if (!query.testState(BukkitAdapter.adapt(location), WorldGuard.getInstance().getPlatform().getSessionManager().get(BukkitAdapter.adapt(player)), Flags.BUILD)) {
+                return false;
+            }
+        }
 
-        if (wgHandler != null && !((WorldGuardHandler) wgHandler).canBuild(player, location)) {
-            return false;
+        if (griefPreventionEnabled) {
+            String result = GriefPrevention.instance.allowBuild(player, location);
+            if (result != null) {
+                return false;
+            }
         }
-        if (gpHandler != null && !((GriefPreventionHandler) gpHandler).canBuild(player, location)) {
-            return false;
-        }
+
         return true;
     }
 
-    // Inner classes to prevent class loading issues if dependencies are missing
-
-    private static class WorldGuardHandler {
-        public boolean canBuild(Player player, Location location) {
-            com.sk89q.worldguard.protection.regions.RegionContainer container = com.sk89q.worldguard.WorldGuard.getInstance().getPlatform().getRegionContainer();
-            com.sk89q.worldguard.protection.regions.RegionQuery query = container.createQuery();
-            return query.testState(com.sk89q.worldedit.bukkit.BukkitAdapter.adapt(location), com.sk89q.worldguard.bukkit.WorldGuardPlugin.inst().wrapPlayer(player), com.sk89q.worldguard.protection.flags.Flags.BUILD);
-        }
-    }
-
-    private static class GriefPreventionHandler {
-        public boolean canBuild(Player player, Location location) {
-            me.ryanhamshire.GriefPrevention.DataStore dataStore = me.ryanhamshire.GriefPrevention.GriefPrevention.instance.dataStore;
-            me.ryanhamshire.GriefPrevention.Claim claim = dataStore.getClaimAt(location, true, null);
-            if (claim == null) return true;
-            return claim.allowBuild(player, org.bukkit.Material.STONE) == null;
-        }
+    public boolean canUse(Player player, Location location) {
+        // Similar to build but maybe different flags for usage
+        return canBuild(player, location);
     }
 }

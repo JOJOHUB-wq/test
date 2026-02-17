@@ -16,11 +16,11 @@ public class PlayerConnectionListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        plugin.getCooldownManager().load(event.getPlayer());
+        plugin.getPlayerDataManager().loadData(event.getPlayer());
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        plugin.getCooldownManager().unload(event.getPlayer());
+        plugin.getPlayerDataManager().saveData(event.getPlayer());
     }
 }

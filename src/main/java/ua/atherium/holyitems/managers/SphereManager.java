@@ -5,170 +5,182 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.EquipmentSlotGroup;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import ua.atherium.holyitems.HolyWorldItems;
-import ua.atherium.holyitems.objects.Rarity;
-import ua.atherium.holyitems.objects.Sphere;
-import ua.atherium.holyitems.objects.SphereEffect;
-import ua.atherium.holyitems.objects.SphereType;
-import ua.atherium.holyitems.utils.ChatUtil;
+import ua.atherium.holyitems.utils.Utils;
 
 import java.util.*;
-import java.util.logging.Level;
 
 public class SphereManager {
 
     private final HolyWorldItems plugin;
-    private final Map<String, Sphere> spheres = new HashMap<>();
-    private final NamespacedKey sphereIdKey;
-    private final NamespacedKey typeKey;
+    private final Map<String, ItemStack> spheres = new HashMap<>();
+    private final NamespacedKey sphereKey;
+    private final NamespacedKey rarityKey;
 
     public SphereManager(HolyWorldItems plugin) {
         this.plugin = plugin;
-        this.sphereIdKey = new NamespacedKey(plugin, "sphere_id");
-        this.typeKey = new NamespacedKey(plugin, "sphere_type");
+        this.sphereKey = new NamespacedKey(plugin, "sphere_id");
+        this.rarityKey = new NamespacedKey(plugin, "sphere_rarity");
         loadSpheres();
+        startTask();
+    }
+
+    private void startTask() {
+        plugin.getServer().getScheduler().runTaskTimer(plugin, () -> {
+            for (org.bukkit.entity.Player player : plugin.getServer().getOnlinePlayers()) {
+                ItemStack offhand = player.getInventory().getItemInOffHand();
+                if (offhand != null && offhand.hasItemMeta()) {
+                    org.bukkit.persistence.PersistentDataContainer pdc = offhand.getItemMeta().getPersistentDataContainer();
+                    // Scan keys? No, keys are namespaced.
+                    // Iterating keys in PDC is not directly exposed easily in API?
+                    // Actually `pdc.getKeys()` exists.
+                    for (NamespacedKey key : pdc.getKeys()) {
+                        if (key.getKey().startsWith("sphere_effect_")) {
+                            String effectName = key.getKey().replace("sphere_effect_", "").toUpperCase();
+                            org.bukkit.potion.PotionEffectType type = org.bukkit.potion.PotionEffectType.getByName(effectName);
+                            if (type != null) {
+                                Integer amplifier = pdc.get(key, PersistentDataType.INTEGER);
+                                if (amplifier != null) {
+                                    // Apply effect
+                                    player.addPotionEffect(new org.bukkit.potion.PotionEffect(type, 40, amplifier, false, false, true)); // 2s duration
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }, 20L, 20L);
     }
 
     public void loadSpheres() {
         spheres.clear();
-        FileConfiguration config = plugin.getConfigManager().getConfig("spheres.yml");
-        ConfigurationSection section = config.getConfigurationSection("spheres");
+        ConfigurationSection section = plugin.getConfigManager().getConfig("spheres.yml").getConfigurationSection("spheres");
         if (section == null) return;
 
-        for (String id : section.getKeys(false)) {
-            try {
-                ConfigurationSection sphereSection = section.getConfigurationSection(id);
-                if (sphereSection == null) continue;
-
-                Rarity rarity = Rarity.valueOf(sphereSection.getString("rarity", "COMMON").toUpperCase());
-                SphereType type = SphereType.valueOf(sphereSection.getString("type", "SPHERE").toUpperCase());
-                Material material = Material.valueOf(sphereSection.getString("material", "MAGMA_CREAM").toUpperCase());
-                String name = sphereSection.getString("name");
-                List<String> lore = sphereSection.getStringList("lore");
-                int convertCost = sphereSection.getInt("convert_cost", 0);
-                int shardValue = sphereSection.getInt("shard_value", 0);
-                boolean convertible = sphereSection.getBoolean("convertible", true);
-
-                List<SphereEffect> effects = new ArrayList<>();
-                List<PotionEffect> potionEffects = new ArrayList<>();
-
-                if (sphereSection.contains("effects")) {
-                    List<Map<?, ?>> effectsList = sphereSection.getMapList("effects");
-                    for (Map<?, ?> map : effectsList) {
-                        try {
-                            String typeName = ((String) map.get("type")).toUpperCase();
-                            if (typeName.equals("FAST_DIGGING") || typeName.equals("HASTE")) {
-                                double amount = ((Number) map.get("amount")).doubleValue();
-                                potionEffects.add(new PotionEffect(PotionEffectType.HASTE, 40, (int) amount));
-                            } else {
-                                Attribute attribute = Attribute.valueOf(typeName);
-                                double amount = ((Number) map.get("amount")).doubleValue();
-                                AttributeModifier.Operation operation = AttributeModifier.Operation.valueOf(((String) map.get("operation")).toUpperCase());
-                                effects.add(new SphereEffect(attribute, amount, operation));
-                            }
-                        } catch (Exception e) {
-                            plugin.getLogger().warning("Invalid effect in sphere " + id + ": " + e.getMessage());
-                        }
-                    }
-                }
-
-                ItemStack itemStack = new ItemStack(material);
-                ItemMeta meta = itemStack.getItemMeta();
-                if (meta != null) {
-                    if (name != null) meta.setDisplayName(ChatUtil.color(name));
-                    if (lore != null) meta.setLore(ChatUtil.color(lore));
-
-                    meta.getPersistentDataContainer().set(sphereIdKey, PersistentDataType.STRING, id);
-                    meta.getPersistentDataContainer().set(typeKey, PersistentDataType.STRING, type.name());
-
-                    // Apply Attributes
-                    for (SphereEffect effect : effects) {
-                        AttributeModifier modifier = new AttributeModifier(
-                                new NamespacedKey(plugin, "sphere_" + id + "_" + effect.getAttribute().name().toLowerCase()),
-                                effect.getAmount(),
-                                effect.getOperation(),
-                                EquipmentSlotGroup.OFFHAND
-                        );
-                        meta.addAttributeModifier(effect.getAttribute(), modifier);
-                    }
-
-                    itemStack.setItemMeta(meta);
-                }
-
-                Sphere sphere = new Sphere(id, rarity, type, itemStack, effects, potionEffects, convertCost, shardValue, convertible);
-                spheres.put(id, sphere);
-
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.WARNING, "Failed to load sphere " + id, e);
+        for (String key : section.getKeys(false)) {
+            ItemStack sphere = createSphereItem(key, section.getConfigurationSection(key));
+            if (sphere != null) {
+                spheres.put(key, sphere);
             }
         }
-        plugin.getLogger().info("Loaded " + spheres.size() + " spheres.");
     }
 
-    public Sphere getSphere(String id) {
-        return spheres.get(id);
-    }
+    private ItemStack createSphereItem(String id, ConfigurationSection section) {
+        String rarity = section.getString("rarity", "COMMON");
+        Material mat = Material.valueOf(plugin.getConfigManager().getConfig("spheres.yml").getString("rarity." + rarity + ".material_sphere", "MAGMA_CREAM"));
 
-    public Sphere getSphere(ItemStack item) {
-        if (item == null || !item.hasItemMeta()) return null;
-        String id = item.getItemMeta().getPersistentDataContainer().get(sphereIdKey, PersistentDataType.STRING);
-        if (id == null) return null;
-        return spheres.get(id);
-    }
-
-    public ItemStack getTalismanItem(String id) {
-        Sphere sphere = spheres.get(id);
-        if (sphere == null) return null;
-
-        ItemStack stack = sphere.getItemStack();
-        stack.setType(Material.TOTEM_OF_UNDYING);
-        ItemMeta meta = stack.getItemMeta();
-        if (meta != null) {
-            String name = meta.getDisplayName();
-            meta.setDisplayName(name.replace("Сфера", "Талисман").replace("сфера", "талисман"));
-            meta.getPersistentDataContainer().set(typeKey, PersistentDataType.STRING, SphereType.TALISMAN.name());
-            stack.setItemMeta(meta);
-        }
-        return stack;
-    }
-
-    public NamespacedKey getSphereIdKey() { return sphereIdKey; }
-    public NamespacedKey getTypeKey() { return typeKey; }
-
-    public Collection<Sphere> getAllSpheres() { return spheres.values(); }
-
-    public ItemStack getShardItem(int amount) {
-        ItemStack item = new ItemStack(Material.PRISMARINE_SHARD, amount);
+        ItemStack item = new ItemStack(mat);
         ItemMeta meta = item.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName(ChatUtil.color("&bОсколок сферы"));
-            // Add a unique tag to identify valid shards if needed, or rely on name/type
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "shard_item"), PersistentDataType.BYTE, (byte) 1);
-            item.setItemMeta(meta);
+
+        String name = section.getString("name", "&7Сфера");
+        meta.setDisplayName(Utils.color(name));
+
+        List<String> lore = new ArrayList<>();
+        lore.add(Utils.color("&7Редкость: " + plugin.getConfigManager().getConfig("spheres.yml").getString("rarity." + rarity + ".name")));
+
+        // Effects
+        // The prompt format is slightly different in two places.
+        // 1. "effects: - type: GENERIC_ATTACK_DAMAGE amount: 1.0"
+        // 2. "type: ATTRIBUTE attribute: GENERIC_ATTACK_DAMAGE amount: 1.0" (my spheres.yml)
+        // I should support both or stick to one. My spheres.yml used the second format for simple spheres and first for unique.
+
+        if (section.contains("effects")) {
+            // List format
+            List<Map<?, ?>> effects = section.getMapList("effects");
+            for (Map<?, ?> effect : effects) {
+                 String type = (String) effect.get("type");
+                 double amount = (Double) effect.get("amount");
+                 lore.add(Utils.color("&7" + type + ": &e+" + amount));
+
+                 // Apply attribute if valid
+                 try {
+                     Attribute attr = Attribute.valueOf(type);
+                     String opStr = (String) effect.getOrDefault("operation", "ADD_NUMBER");
+                     AttributeModifier.Operation op = AttributeModifier.Operation.valueOf(opStr);
+
+                     NamespacedKey key = new NamespacedKey(plugin, "sphere_" + id + "_" + type.toLowerCase() + "_" + op.name().toLowerCase());
+                     AttributeModifier mod = new AttributeModifier(key, amount, op, EquipmentSlotGroup.OFFHAND);
+                     meta.addAttributeModifier(attr, mod);
+                 } catch (Exception ignored) {
+                     // Try Potion Effect
+                     org.bukkit.potion.PotionEffectType pet = org.bukkit.potion.PotionEffectType.getByName(type);
+                     if (pet != null) {
+                         NamespacedKey key = new NamespacedKey(plugin, "sphere_effect_" + type.toLowerCase());
+                         meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, (int) amount);
+                     }
+                 }
+            }
+        } else if (section.contains("attribute")) {
+            // Single attribute format
+            String attrName = section.getString("attribute");
+            double amount = section.getDouble("amount");
+            String opStr = section.getString("operation", "ADD_NUMBER");
+
+            lore.add(Utils.color("&7" + attrName + ": &e+" + amount));
+
+             try {
+                 Attribute attr = Attribute.valueOf(attrName);
+                 AttributeModifier.Operation op = AttributeModifier.Operation.valueOf(opStr);
+
+                 NamespacedKey key = new NamespacedKey(plugin, "sphere_" + id + "_" + attrName.toLowerCase() + "_" + op.name().toLowerCase());
+                 AttributeModifier mod = new AttributeModifier(key, amount, op, EquipmentSlotGroup.OFFHAND);
+                 meta.addAttributeModifier(attr, mod);
+             } catch (Exception ignored) {
+                 // Try Potion Effect
+                 org.bukkit.potion.PotionEffectType pet = org.bukkit.potion.PotionEffectType.getByName(attrName);
+                 if (pet != null) {
+                     NamespacedKey key = new NamespacedKey(plugin, "sphere_effect_" + attrName.toLowerCase());
+                     meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, (int) amount);
+                 }
+             }
         }
+
+        meta.setLore(lore);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.getPersistentDataContainer().set(sphereKey, PersistentDataType.STRING, id);
+        meta.getPersistentDataContainer().set(rarityKey, PersistentDataType.STRING, rarity);
+
+        item.setItemMeta(meta);
         return item;
     }
 
-    public boolean isShard(ItemStack item) {
-        if (item == null || item.getType() != Material.PRISMARINE_SHARD) return false;
-        ItemMeta meta = item.getItemMeta();
-        return meta != null && meta.getPersistentDataContainer().has(new NamespacedKey(plugin, "shard_item"), PersistentDataType.BYTE);
+    public ItemStack getSphere(String id) {
+        if (spheres.containsKey(id)) return spheres.get(id).clone();
+        return null;
     }
 
-    public String getNextTierId(String id) {
-        if (id.startsWith("common_") && id.endsWith("_1")) {
-            return id.replace("common_", "epic_").replace("_1", "_2");
-        }
-        if (id.startsWith("epic_") && id.endsWith("_2")) {
-            return id.replace("epic_", "legendary_").replace("_2", "_3");
-        }
-        return null;
+    public Map<String, ItemStack> getSpheres() {
+        return spheres;
+    }
+
+    public NamespacedKey getSphereKey() {
+        return sphereKey;
+    }
+
+    public NamespacedKey getRarityKey() {
+        return rarityKey;
+    }
+
+    public void registerRecipes() {
+        // Register furnace recipes for base materials to allow smelting event to fire
+        // Result is dummy, replaced in listener
+        org.bukkit.inventory.ItemStack result = new org.bukkit.inventory.ItemStack(Material.PRISMARINE_SHARD);
+
+        NamespacedKey key1 = new NamespacedKey(plugin, "sphere_smelt_magma");
+        org.bukkit.inventory.FurnaceRecipe recipe1 = new org.bukkit.inventory.FurnaceRecipe(key1, result, Material.MAGMA_CREAM, 0f, 200);
+        try {
+            plugin.getServer().addRecipe(recipe1);
+        } catch (Exception ignored) {}
+
+        NamespacedKey key2 = new NamespacedKey(plugin, "sphere_smelt_totem");
+        org.bukkit.inventory.FurnaceRecipe recipe2 = new org.bukkit.inventory.FurnaceRecipe(key2, result, Material.TOTEM_OF_UNDYING, 0f, 200);
+        try {
+            plugin.getServer().addRecipe(recipe2);
+        } catch (Exception ignored) {}
     }
 }

@@ -1,23 +1,17 @@
 package ua.atherium.holyitems.managers;
 
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.logging.Level;
+import ua.atherium.holyitems.HolyWorldItems;
 
 public class EconomyManager {
 
-    private final JavaPlugin plugin;
+    private final HolyWorldItems plugin;
     private Economy economy;
 
-    public EconomyManager(JavaPlugin plugin) {
+    public EconomyManager(HolyWorldItems plugin) {
         this.plugin = plugin;
-        if (!setupEconomy()) {
-            plugin.getLogger().warning("Vault not found! Economy features disabled.");
-        }
+        setupEconomy();
     }
 
     private boolean setupEconomy() {
@@ -32,27 +26,18 @@ public class EconomyManager {
         return economy != null;
     }
 
-    public boolean has(OfflinePlayer player, double amount) {
+    public boolean hasMoney(String playerName, double amount) {
         if (economy == null) return false;
-        return economy.has(player, amount);
+        return economy.getBalance(playerName) >= amount;
     }
 
-    public boolean withdraw(OfflinePlayer player, double amount) {
+    public boolean withdraw(String playerName, double amount) {
         if (economy == null) return false;
-        return economy.withdrawPlayer(player, amount).transactionSuccess();
+        return economy.withdrawPlayer(playerName, amount).transactionSuccess();
     }
 
-    public void deposit(OfflinePlayer player, double amount) {
+    public void deposit(String playerName, double amount) {
         if (economy == null) return;
-        economy.depositPlayer(player, amount);
-    }
-
-    public boolean isEnabled() {
-        return economy != null;
-    }
-
-    public String format(double amount) {
-        if (economy == null) return String.format("%.2f", amount);
-        return economy.format(amount);
+        economy.depositPlayer(playerName, amount);
     }
 }

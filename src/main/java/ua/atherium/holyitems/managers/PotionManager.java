@@ -4,108 +4,94 @@ import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import ua.atherium.holyitems.HolyWorldItems;
-import ua.atherium.holyitems.objects.CustomPotion;
-import ua.atherium.holyitems.utils.ChatUtil;
+import ua.atherium.holyitems.utils.Utils;
 
-import java.util.*;
-import java.util.logging.Level;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PotionManager {
 
     private final HolyWorldItems plugin;
-    private final Map<String, CustomPotion> potions = new HashMap<>();
-    private final NamespacedKey potionIdKey;
+    private final Map<String, ItemStack> potions = new HashMap<>();
+    private final NamespacedKey potionKey;
 
     public PotionManager(HolyWorldItems plugin) {
         this.plugin = plugin;
-        this.potionIdKey = new NamespacedKey(plugin, "potion_id");
+        this.potionKey = new NamespacedKey(plugin, "custom_potion");
         loadPotions();
     }
 
     public void loadPotions() {
         potions.clear();
-        FileConfiguration config = plugin.getConfigManager().getConfig("potions.yml");
-        ConfigurationSection section = config.getConfigurationSection("potions");
+        ConfigurationSection section = plugin.getConfigManager().getConfig("potions.yml").getConfigurationSection("potions");
         if (section == null) return;
 
-        for (String id : section.getKeys(false)) {
-            try {
-                ConfigurationSection potionSection = section.getConfigurationSection(id);
-                if (potionSection == null) continue;
-
-                String name = potionSection.getString("name");
-                String colorStr = potionSection.getString("color");
-                List<String> lore = potionSection.getStringList("lore");
-                double price = potionSection.getDouble("price");
-
-                List<PotionEffect> effects = new ArrayList<>();
-                if (potionSection.contains("effects")) {
-                    List<Map<?, ?>> effectsList = potionSection.getMapList("effects");
-                    for (Map<?, ?> map : effectsList) {
-                        String typeName = (String) map.get("type");
-                        int amplifier = (int) map.get("amplifier");
-                        int duration = (int) map.get("duration"); // seconds
-
-                        PotionEffectType type = PotionEffectType.getByName(typeName);
-                        if (type != null) {
-                            effects.add(new PotionEffect(type, duration * 20, amplifier));
-                        }
-                    }
-                }
-
-                CustomPotion potion = new CustomPotion(id, name, colorStr, effects, lore, price);
-                potions.put(id, potion);
-
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.WARNING, "Failed to load potion " + id, e);
+        for (String key : section.getKeys(false)) {
+            ItemStack potion = createPotion(key, section.getConfigurationSection(key));
+            if (potion != null) {
+                potions.put(key, potion);
             }
         }
-        plugin.getLogger().info("Loaded " + potions.size() + " custom potions.");
     }
 
-    public ItemStack getPotionItem(String id) {
-        CustomPotion potion = potions.get(id);
-        if (potion == null) return null;
-
+    private ItemStack createPotion(String id, ConfigurationSection section) {
         ItemStack item = new ItemStack(Material.POTION);
         PotionMeta meta = (PotionMeta) item.getItemMeta();
 
-        if (meta != null) {
-            meta.setDisplayName(ChatUtil.color(potion.getName()));
-            meta.setLore(ChatUtil.color(potion.getLore()));
+        String name = section.getString("name", "Potion");
+        meta.setDisplayName(Utils.color(name));
 
-            if (potion.getColor() != null) {
-                try {
-                    String hex = potion.getColor().replace("#", "");
-                    meta.setColor(Color.fromRGB(Integer.parseInt(hex, 16)));
-                } catch (Exception ignored) {}
+        String colorHex = section.getString("color", "#FFFFFF");
+        try {
+            if (colorHex.startsWith("#")) {
+                meta.setColor(Color.fromRGB(Integer.valueOf(colorHex.substring(1), 16)));
             }
-
-            for (PotionEffect effect : potion.getEffects()) {
-                meta.addCustomEffect(effect, true);
-            }
-
-            meta.getPersistentDataContainer().set(potionIdKey, PersistentDataType.STRING, id);
-            item.setItemMeta(meta);
+        } catch (Exception e) {
+            plugin.getLogger().warning("Неверный цвет зелья: " + colorHex);
         }
+
+        // Effects
+        // The prompt says: "effects: - STRENGTH:2:180" (type:amplifier:duration_seconds)
+        // OR my potions.yml format: "- type: STRENGTH duration: 180 amplifier: 1"
+        // I will support my potions.yml format as I wrote it.
+
+        if (section.contains("effects")) {
+             // If list of strings
+             if (section.isList("effects") && !section.getMapList("effects").isEmpty()) {
+                 // Map list format
+                  for (Map<?, ?> effectMap : section.getMapList("effects")) {
+                      String typeName = (String) effectMap.get("type");
+                      int duration = (Integer) effectMap.get("duration");
+                      int amplifier = (Integer) effectMap.get("amplifier");
+
+                      PotionEffectType type = PotionEffectType.getByName(typeName);
+                      if (type != null) {
+                          meta.addCustomEffect(new PotionEffect(type, duration * 20, amplifier), true);
+                      }
+                  }
+             }
+        }
+
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS); // Often custom potions hide default text
+        meta.getPersistentDataContainer().set(potionKey, PersistentDataType.STRING, id);
+
+        item.setItemMeta(meta);
         return item;
     }
 
-    public CustomPotion getPotion(ItemStack item) {
-        if (item == null || !item.hasItemMeta()) return null;
-        String id = item.getItemMeta().getPersistentDataContainer().get(potionIdKey, PersistentDataType.STRING);
-        if (id == null) return null;
-        return potions.get(id);
+    public ItemStack getPotion(String id) {
+        if (potions.containsKey(id)) return potions.get(id).clone();
+        return null;
     }
 
-    public Collection<CustomPotion> getAllPotions() {
-        return potions.values();
+    public Map<String, ItemStack> getPotions() {
+        return potions;
     }
 }

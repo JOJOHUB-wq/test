@@ -1,5 +1,6 @@
 package ua.atherium.holyitems.managers;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
@@ -7,225 +8,175 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.EquipmentSlotGroup;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 import ua.atherium.holyitems.HolyWorldItems;
-import ua.atherium.holyitems.objects.CustomItem;
-import ua.atherium.holyitems.utils.ChatUtil;
+import ua.atherium.holyitems.utils.Utils;
 
 import java.util.*;
-import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 public class ItemManager {
 
     private final HolyWorldItems plugin;
-    private final Map<String, CustomItem> items = new HashMap<>();
-    private final NamespacedKey idKey;
+    private final Map<String, ItemStack> items = new HashMap<>();
+    private final NamespacedKey itemKey;
 
     public ItemManager(HolyWorldItems plugin) {
         this.plugin = plugin;
-        this.idKey = new NamespacedKey(plugin, "custom_item_id");
+        this.itemKey = new NamespacedKey(plugin, "holy_item_id");
         loadItems();
     }
 
     public void loadItems() {
         items.clear();
+        // Clear recipes to avoid dupes on reload (not perfect but works for now)
+        // Bukkit.resetRecipes() only clears all... better to use NamespacedKey for recipes.
+
         FileConfiguration config = plugin.getConfigManager().getConfig("items.yml");
         ConfigurationSection section = config.getConfigurationSection("items");
         if (section == null) return;
 
-        for (String id : section.getKeys(false)) {
+        for (String key : section.getKeys(false)) {
             try {
-                ConfigurationSection itemSection = section.getConfigurationSection(id);
-                if (itemSection == null) continue;
+                ConfigurationSection itemSection = section.getConfigurationSection(key);
+                ItemStack item = createItem(key, itemSection);
+                items.put(key, item);
 
-                // Load properties
-                String materialName = itemSection.getString("material");
-                ItemStack itemStack;
-
-                if ("PLAYER_HEAD".equalsIgnoreCase(materialName) || "SKULL".equalsIgnoreCase(materialName)) {
-                    String texture = itemSection.getString("skull_texture");
-                    if (texture != null) {
-                        itemStack = plugin.getSkullManager().createSkull(texture);
-                    } else {
-                        itemStack = new ItemStack(Material.PLAYER_HEAD);
-                    }
-                } else {
-                    Material material = Material.valueOf(materialName);
-                    itemStack = new ItemStack(material);
-                }
-
-                ItemMeta meta = itemStack.getItemMeta();
-                if (meta != null) {
-                    // Name & Lore
-                    String name = itemSection.getString("name");
-                    if (name != null) meta.setDisplayName(ChatUtil.color(name));
-
-                    List<String> lore = itemSection.getStringList("lore");
-                    if (lore != null) meta.setLore(ChatUtil.color(lore));
-
-                    // Custom Model Data
-                    if (itemSection.contains("custom_model_data")) {
-                        meta.setCustomModelData(itemSection.getInt("custom_model_data"));
-                    }
-
-                    // Unbreakable
-                    if (itemSection.getBoolean("unbreakable")) {
-                        meta.setUnbreakable(true);
-                    }
-
-                    // Enchantment Glow (hide enchants)
-                    if (itemSection.getBoolean("enchantment_glow")) {
-                        meta.addEnchant(Enchantment.UNBREAKING, 1, true);
-                        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-                    }
-
-                    // Enchantments
-                    if (itemSection.contains("enchantments")) {
-                        ConfigurationSection enchants = itemSection.getConfigurationSection("enchantments");
-                        if (enchants != null) {
-                            for (String enchName : enchants.getKeys(false)) {
-                                Enchantment enchantment = Enchantment.getByName(enchName.toUpperCase());
-                                if (enchantment == null) {
-                                    // Try NamespacedKey
-                                    try {
-                                        enchantment = Enchantment.getByKey(NamespacedKey.minecraft(enchName.toLowerCase()));
-                                    } catch (Exception ignored) {}
-                                }
-
-                                if (enchantment != null) {
-                                    meta.addEnchant(enchantment, enchants.getInt(enchName), true);
-                                }
-                            }
-                        }
-                    }
-
-                    // Attributes
-                    if (itemSection.contains("attributes")) {
-                        ConfigurationSection attrs = itemSection.getConfigurationSection("attributes");
-                        if (attrs != null) {
-                            for (String attrName : attrs.getKeys(false)) {
-                                try {
-                                    Attribute attribute = Attribute.valueOf(attrName.toUpperCase());
-                                    double amount = attrs.getDouble(attrName);
-                                    EquipmentSlot slot = getSlot(itemStack.getType());
-                                    EquipmentSlotGroup group;
-                                    if (slot == EquipmentSlot.HAND) group = EquipmentSlotGroup.HAND;
-                                    else if (slot == EquipmentSlot.OFF_HAND) group = EquipmentSlotGroup.OFFHAND;
-                                    else if (slot == EquipmentSlot.HEAD) group = EquipmentSlotGroup.HEAD;
-                                    else if (slot == EquipmentSlot.CHEST) group = EquipmentSlotGroup.CHEST;
-                                    else if (slot == EquipmentSlot.LEGS) group = EquipmentSlotGroup.LEGS;
-                                    else if (slot == EquipmentSlot.FEET) group = EquipmentSlotGroup.FEET;
-                                    else group = EquipmentSlotGroup.ANY;
-
-                                    AttributeModifier modifier = new AttributeModifier(
-                                            new NamespacedKey(plugin, "custom_" + attrName.toLowerCase()),
-                                            amount,
-                                            AttributeModifier.Operation.ADD_NUMBER,
-                                            group
-                                    );
-                                    meta.addAttributeModifier(attribute, modifier);
-                                } catch (IllegalArgumentException e) {
-                                    plugin.getLogger().warning("Invalid attribute: " + attrName + " for item " + id);
-                                }
-                            }
-                        }
-                    }
-
-                    // Store ID in PDC
-                    meta.getPersistentDataContainer().set(idKey, PersistentDataType.STRING, id);
-                    itemStack.setItemMeta(meta);
-                }
-
-                // Other properties
-                long cooldown = itemSection.getLong("cooldown", 0);
-                double price = itemSection.getDouble("price", 0);
-                boolean consume = itemSection.getBoolean("consume", false);
-                boolean placeable = itemSection.getBoolean("placeable", false);
-                String type = itemSection.getString("type", "MISC").toUpperCase();
-
-                // Effects Map (convert section to map)
-                Map<String, Object> effects = new HashMap<>();
-                if (itemSection.contains("effects")) {
-                    ConfigurationSection effectsSection = itemSection.getConfigurationSection("effects");
-                    effects.putAll(convertSectionToMap(effectsSection));
-                }
-
-                // Add on_hit effects
-                if (itemSection.contains("on_hit")) {
-                    effects.put("on_hit", convertSectionToMap(itemSection.getConfigurationSection("on_hit")));
-                }
-
-                CustomItem customItem = new CustomItem(id, itemStack, cooldown, effects, price, consume, placeable, type);
-                items.put(id, customItem);
+                // Recipes
+                registerRecipes(key, item, itemSection);
 
             } catch (Exception e) {
-                plugin.getLogger().log(Level.WARNING, "Failed to load item " + id, e);
+                plugin.getLogger().severe("Ошибка при загрузке предмета " + key + ": " + e.getMessage());
+                e.printStackTrace();
             }
         }
-        plugin.getLogger().info("Loaded " + items.size() + " custom items.");
     }
 
-    private EquipmentSlot getSlot(Material material) {
-        String name = material.name();
-        if (name.endsWith("_HELMET") || name.endsWith("_HEAD") || name.endsWith("SKULL")) return EquipmentSlot.HEAD;
-        if (name.endsWith("_CHESTPLATE") || name.equals("ELYTRA")) return EquipmentSlot.CHEST;
-        if (name.endsWith("_LEGGINGS")) return EquipmentSlot.LEGS;
-        if (name.endsWith("_BOOTS")) return EquipmentSlot.FEET;
-        if (name.endsWith("_SHIELD")) return EquipmentSlot.OFF_HAND;
-        return EquipmentSlot.HAND; // Default to main hand
-    }
+    private ItemStack createItem(String id, ConfigurationSection section) {
+        String materialName = section.getString("material");
+        Material material = Material.valueOf(materialName);
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
 
-    private Map<String, Object> convertSectionToMap(ConfigurationSection section) {
-        Map<String, Object> map = new HashMap<>();
-        if (section == null) return map;
-        for (String key : section.getKeys(false)) {
-            if (section.isConfigurationSection(key)) {
-                map.put(key, convertSectionToMap(section.getConfigurationSection(key)));
-            } else {
-                map.put(key, section.get(key));
-            }
+        // Name & Lore
+        if (section.contains("name")) {
+            meta.setDisplayName(Utils.color(section.getString("name")));
         }
-        return map;
-    }
+        if (section.contains("lore")) {
+            meta.setLore(Utils.color(section.getStringList("lore")));
+        }
 
-    public CustomItem getItem(String id) {
-        return items.get(id);
-    }
+        // Custom Model Data
+        if (section.contains("custom_model_data")) {
+            meta.setCustomModelData(section.getInt("custom_model_data"));
+        }
 
-    public CustomItem getItem(ItemStack item) {
-        if (item == null || !item.hasItemMeta()) return null;
-        String id = item.getItemMeta().getPersistentDataContainer().get(idKey, PersistentDataType.STRING);
-        if (id == null) return null;
-        return items.get(id);
-    }
+        // Unbreakable
+        if (section.getBoolean("unbreakable")) {
+            meta.setUnbreakable(true);
+        }
 
-    public void giveItem(Player player, String id, int amount) {
-        CustomItem item = items.get(id);
-        if (item != null) {
-            ItemStack stack = item.getItemStack();
-            stack.setAmount(amount);
-            HashMap<Integer, ItemStack> remaining = player.getInventory().addItem(stack);
-            if (!remaining.isEmpty()) {
-                for (ItemStack drop : remaining.values()) {
-                    player.getWorld().dropItem(player.getLocation(), drop);
+        // Glow
+        if (section.getBoolean("enchantment_glow")) {
+            meta.addEnchant(Enchantment.UNBREAKING, 1, true);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        }
+
+        // Vanilla Enchantments
+        if (section.contains("enchantments")) {
+            ConfigurationSection enchants = section.getConfigurationSection("enchantments");
+            for (String enchName : enchants.getKeys(false)) {
+                Enchantment enchantment = Enchantment.getByName(enchName.toUpperCase());
+                if (enchantment != null) {
+                    meta.addEnchant(enchantment, enchants.getInt(enchName), true);
+                } else {
+                    // Custom enchant logic could go here, but usually stored in NBT/Lore
                 }
             }
         }
+
+        // Attributes
+        if (section.contains("attributes")) {
+            ConfigurationSection attrs = section.getConfigurationSection("attributes");
+            for (String attrName : attrs.getKeys(false)) {
+                try {
+                    Attribute attribute = Attribute.valueOf(attrName);
+                    double value = attrs.getDouble(attrName);
+                    // Add modifier using NamespacedKey for 1.21+
+                    NamespacedKey key = new NamespacedKey(plugin, "holy_attr_" + attrName.toLowerCase());
+                    AttributeModifier modifier = new AttributeModifier(key, value, AttributeModifier.Operation.ADD_NUMBER, org.bukkit.inventory.EquipmentSlotGroup.ANY);
+                    meta.addAttributeModifier(attribute, modifier);
+                } catch (IllegalArgumentException e) {
+                    plugin.getLogger().warning("Неизвестный атрибут: " + attrName);
+                }
+            }
+        }
+
+        // Persistent Data (ID)
+        meta.getPersistentDataContainer().set(itemKey, PersistentDataType.STRING, id);
+
+        item.setItemMeta(meta);
+        return item;
     }
 
-    public Collection<CustomItem> getAllItems() {
-        return items.values();
+    private void registerRecipes(String id, ItemStack result, ConfigurationSection section) {
+        // Craft Recipe (Shaped)
+        if (section.contains("craft_recipe")) {
+            NamespacedKey key = new NamespacedKey(plugin, "recipe_" + id);
+            // Remove old if exists (hard to do without iterating all recipes, skipping for now)
+
+            ConfigurationSection craft = section.getConfigurationSection("craft_recipe");
+            ShapedRecipe recipe = new ShapedRecipe(key, result);
+
+            List<String> shape = craft.getStringList("shape");
+            recipe.shape(shape.toArray(new String[0]));
+
+            ConfigurationSection ingredients = craft.getConfigurationSection("ingredients");
+            for (String charKey : ingredients.getKeys(false)) {
+                Material mat = Material.valueOf(ingredients.getString(charKey));
+                recipe.setIngredient(charKey.charAt(0), mat);
+            }
+
+            // Register safely
+            try {
+                Bukkit.addRecipe(recipe);
+            } catch (Exception ignored) {} // Duplicate key
+        }
+
+        // Craft From (Shapeless - e.g. Emerald Dust)
+        if (section.contains("craft_from")) {
+            NamespacedKey key = new NamespacedKey(plugin, "recipe_shapeless_" + id);
+            ShapelessRecipe recipe = new ShapelessRecipe(key, result);
+            int amount = section.getInt("craft_amount", 1);
+            result.setAmount(amount);
+
+            Material mat = Material.valueOf(section.getString("craft_from"));
+            recipe.addIngredient(mat);
+
+             try {
+                Bukkit.addRecipe(recipe);
+            } catch (Exception ignored) {}
+        }
     }
 
-    public NamespacedKey getIdKey() {
-        return idKey;
+    public ItemStack getItem(String id) {
+        if (items.containsKey(id)) {
+            return items.get(id).clone();
+        }
+        return null;
+    }
+
+    public String getItemId(ItemStack item) {
+        if (item == null || !item.hasItemMeta()) return null;
+        return item.getItemMeta().getPersistentDataContainer().get(itemKey, PersistentDataType.STRING);
+    }
+
+    public Map<String, ItemStack> getItems() {
+        return items;
+    }
+
+    public NamespacedKey getItemKey() {
+        return itemKey;
     }
 }

@@ -1,114 +1,51 @@
 package ua.atherium.holyitems.listeners;
 
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import ua.atherium.holyitems.HolyWorldItems;
-import ua.atherium.holyitems.managers.ItemManager;
+import ua.atherium.holyitems.utils.Utils;
 
 public class BlockPlaceListener implements Listener {
 
     private final HolyWorldItems plugin;
-    private final ItemManager itemManager;
 
     public BlockPlaceListener(HolyWorldItems plugin) {
         this.plugin = plugin;
-        this.itemManager = plugin.getItemManager();
     }
 
     @EventHandler
-    public void onBlockPlace(BlockPlaceEvent event) {
+    public void onPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
         ItemStack item = event.getItemInHand();
-        Block block = event.getBlockPlaced();
+        String id = plugin.getItemManager().getItemId(item);
 
-        if (!item.hasItemMeta()) return;
+        if (id == null) return;
 
-        PersistentDataContainer pdc = item.getItemMeta().getPersistentDataContainer();
+        // Region Check (already handled by WorldGuard usually, but custom check requested for traps)
+        // For machines, we rely on standard protection.
 
-        // Check if custom item
-        if (!pdc.has(plugin.getItemManager().getIdKey(), PersistentDataType.STRING)) {
-            return;
-        }
-
-        String itemId = pdc.get(plugin.getItemManager().getIdKey(), PersistentDataType.STRING);
-
-        // Handle specific placeable items
-        switch (itemId) {
+        switch (id) {
             case "fast_furnace":
-                handleFastFurnace(block, player);
+                plugin.getMachineManager().addMachine(event.getBlock().getLocation(), "fast_furnace");
+                player.sendMessage(Utils.color("&aБыстрая печка установлена!"));
                 break;
-
             case "golden_spawner":
-                handleGoldenSpawner(block, player);
+                plugin.getMachineManager().addMachine(event.getBlock().getLocation(), "golden_spawner");
+                player.sendMessage(Utils.color("&aЗолотой спавнер установлен!"));
+                if (plugin.getConfigManager().getConfig("items.yml").getBoolean("items.golden_spawner.broadcast_coords")) {
+                     // Broadcast? Prompt says "Chat Broadcast: Shows coordinates on place"
+                     plugin.getServer().broadcastMessage(Utils.color("&6Игрок " + player.getName() + " установил Золотой спавнер на " +
+                         event.getBlock().getX() + ", " + event.getBlock().getY() + ", " + event.getBlock().getZ() + "!"));
+                }
                 break;
-
             case "auto_crafter":
-                handleAutoCrafter(block, player);
-                break;
-
-            default:
+                plugin.getMachineManager().addMachine(event.getBlock().getLocation(), "auto_crafter");
+                player.sendMessage(Utils.color("&aАвто-крафтер установлен!"));
                 break;
         }
-    }
-
-    private void handleFastFurnace(Block block, Player player) {
-        if (block.getType() != Material.FURNACE) return;
-
-        // Store custom data in block
-        // In reality, TileState is needed to store PDC on block
-        if (block.getState() instanceof org.bukkit.block.TileState) {
-            org.bukkit.block.TileState state = (org.bukkit.block.TileState) block.getState();
-            PersistentDataContainer pdc = state.getPersistentDataContainer();
-            pdc.set(plugin.getKey("fast_furnace"), PersistentDataType.BYTE, (byte) 1);
-            pdc.set(plugin.getKey("speed_multiplier"), PersistentDataType.DOUBLE, 3.0);
-            pdc.set(plugin.getKey("fuel_efficiency"), PersistentDataType.DOUBLE, 1.5);
-            state.update();
-        }
-
-        player.sendMessage(plugin.getMessage("fast-furnace-placed"));
-    }
-
-    private void handleGoldenSpawner(Block block, Player player) {
-        if (block.getType() != Material.SPAWNER) return;
-
-        if (block.getState() instanceof org.bukkit.block.TileState) {
-            org.bukkit.block.TileState state = (org.bukkit.block.TileState) block.getState();
-            PersistentDataContainer pdc = state.getPersistentDataContainer();
-            pdc.set(plugin.getKey("golden_spawner"), PersistentDataType.BYTE, (byte) 1);
-            pdc.set(plugin.getKey("durability"), PersistentDataType.INTEGER, 100);
-            pdc.set(plugin.getKey("last_generate"), PersistentDataType.LONG, System.currentTimeMillis());
-            state.update();
-        }
-
-        // Broadcast coordinates
-        String message = plugin.getMessage("golden-spawner-placed")
-            .replace("{player}", player.getName())
-            .replace("{x}", String.valueOf(block.getX()))
-            .replace("{y}", String.valueOf(block.getY()))
-            .replace("{z}", String.valueOf(block.getZ()));
-
-        plugin.getServer().broadcastMessage(message);
-
-        plugin.getGoldenSpawners().add(block.getLocation());
-    }
-
-    private void handleAutoCrafter(Block block, Player player) {
-        if (block.getType() != Material.DISPENSER) return;
-
-        if (block.getState() instanceof org.bukkit.block.TileState) {
-            org.bukkit.block.TileState state = (org.bukkit.block.TileState) block.getState();
-            PersistentDataContainer pdc = state.getPersistentDataContainer();
-            pdc.set(plugin.getKey("auto_crafter"), PersistentDataType.BYTE, (byte) 1);
-            state.update();
-        }
-
-        player.sendMessage(plugin.getMessage("auto-crafter-placed"));
     }
 }
