@@ -1,0 +1,435 @@
+# ════════════════════════════════════════
+#         Сферы и Талисманы HolyWorld
+# ════════════════════════════════════════
+
+# Система:
+# - Активация: в левой руке (offhand)
+# - Конвертация: сфера → талисман за уровни опыта
+# - Осколки: переплавка в печи
+# - Улучшение: комбинирование в наковальне
+
+spheres:
+  # ═══ ОБЫЧНЫЕ СФЕРЫ ═══
+  common_damage_1:
+    rarity: COMMON
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&x&a&8&e&b&f&cОбычная сфера урона"
+    lore:
+      - "&7Эффект: &fУрон +1"
+      - ""
+      - "&7Редкость: &fОбычная"
+      - "&7Конвертация: &e30 уровней"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 1.0
+        operation: ADD_NUMBER
+    convert_cost: 30
+    shard_value: 5
+    convertible: true
+
+  common_armor_1:
+    rarity: COMMON
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&x&a&8&e&b&f&cОбычная сфера брони"
+    lore:
+      - "&7Эффект: &fБроня +1"
+      - ""
+      - "&7Редкость: &fОбычная"
+      - "&7Конвертация: &e30 уровней"
+    effects:
+      - type: GENERIC_ARMOR
+        amount: 1.0
+        operation: ADD_NUMBER
+    convert_cost: 30
+    shard_value: 5
+    convertible: true
+
+  common_speed_1:
+    rarity: COMMON
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&x&a&8&e&b&f&cОбычная сфера скорости"
+    lore:
+      - "&7Эффект: &fСкорость +1"
+      - ""
+      - "&7Редкость: &fОбычная"
+      - "&7Конвертация: &e30 уровней"
+    effects:
+      - type: GENERIC_MOVEMENT_SPEED
+        amount: 0.02 # 10% speed increase
+        operation: ADD_SCALAR
+    convert_cost: 30
+    shard_value: 5
+    convertible: true
+
+  common_health_1:
+    rarity: COMMON
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&x&a&8&e&b&f&cОбычная сфера здоровья"
+    lore:
+      - "&7Эффект: &fЗдоровье +1"
+      - ""
+      - "&7Редкость: &fОбычная"
+      - "&7Конвертация: &e30 уровней"
+    effects:
+      - type: GENERIC_MAX_HEALTH
+        amount: 2.0 # 1 heart
+        operation: ADD_NUMBER
+    convert_cost: 30
+    shard_value: 5
+    convertible: true
+
+  # ═══ ЭПИЧЕСКИЕ СФЕРЫ ═══
+  epic_damage_2:
+    rarity: EPIC
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&x&a&a&5&5&f&fЭпическая сфера урона"
+    lore:
+      - "&7Эффект: &dУрон +2"
+      - ""
+      - "&7Редкость: &dЭпическая"
+      - "&7Конвертация: &e50 уровней"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 2.0
+        operation: ADD_NUMBER
+    convert_cost: 50
+    shard_value: 15
+    convertible: true
+
+  epic_armor_2:
+    rarity: EPIC
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&x&a&a&5&5&f&fЭпическая сфера брони"
+    lore:
+      - "&7Эффект: &dБроня +2"
+      - ""
+      - "&7Редкость: &dЭпическая"
+      - "&7Конвертация: &e50 уровней"
+    effects:
+      - type: GENERIC_ARMOR
+        amount: 2.0
+        operation: ADD_NUMBER
+    convert_cost: 50
+    shard_value: 15
+    convertible: true
+
+  epic_speed_2:
+    rarity: EPIC
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&x&a&a&5&5&f&fЭпическая сфера скорости"
+    lore:
+      - "&7Эффект: &dСкорость +2"
+      - ""
+      - "&7Редкость: &dЭпическая"
+      - "&7Конвертация: &e50 уровней"
+    effects:
+      - type: GENERIC_MOVEMENT_SPEED
+        amount: 0.04 # 20% speed increase
+        operation: ADD_SCALAR
+    convert_cost: 50
+    shard_value: 15
+    convertible: true
+
+  epic_health_2:
+    rarity: EPIC
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&x&a&a&5&5&f&fЭпическая сфера здоровья"
+    lore:
+      - "&7Эффект: &dЗдоровье +2"
+      - ""
+      - "&7Редкость: &dЭпическая"
+      - "&7Конвертация: &e50 уровней"
+    effects:
+      - type: GENERIC_MAX_HEALTH
+        amount: 4.0 # 2 hearts
+        operation: ADD_NUMBER
+    convert_cost: 50
+    shard_value: 15
+    convertible: true
+
+  # ═══ ЛЕГЕНДАРНЫЕ СФЕРЫ ═══
+  legendary_damage_3:
+    rarity: LEGENDARY
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&x&f&f&d&7&0&0Легендарная сфера урона"
+    lore:
+      - "&7Эффект: &6Урон +3"
+      - ""
+      - "&7Редкость: &6Легендарная"
+      - "&7Конвертация: &e60 уровней"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 3.0
+        operation: ADD_NUMBER
+    convert_cost: 60
+    shard_value: 30
+    convertible: true
+
+  legendary_armor_3:
+    rarity: LEGENDARY
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&x&f&f&d&7&0&0Легендарная сфера брони"
+    lore:
+      - "&7Эффект: &6Броня +3"
+      - ""
+      - "&7Редкость: &6Легендарная"
+      - "&7Конвертация: &e60 уровней"
+    effects:
+      - type: GENERIC_ARMOR
+        amount: 3.0
+        operation: ADD_NUMBER
+    convert_cost: 60
+    shard_value: 30
+    convertible: true
+
+  legendary_speed_3:
+    rarity: LEGENDARY
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&x&f&f&d&7&0&0Легендарная сфера скорости"
+    lore:
+      - "&7Эффект: &6Скорость +3"
+      - ""
+      - "&7Редкость: &6Легендарная"
+      - "&7Конвертация: &e60 уровней"
+    effects:
+      - type: GENERIC_MOVEMENT_SPEED
+        amount: 0.06 # 30% speed increase
+        operation: ADD_SCALAR
+    convert_cost: 60
+    shard_value: 30
+    convertible: true
+
+  legendary_health_3:
+    rarity: LEGENDARY
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&x&f&f&d&7&0&0Легендарная сфера здоровья"
+    lore:
+      - "&7Эффект: &6Здоровье +3"
+      - ""
+      - "&7Редкость: &6Легендарная"
+      - "&7Конвертация: &e60 уровней"
+    effects:
+      - type: GENERIC_MAX_HEALTH
+        amount: 6.0 # 3 hearts
+        operation: ADD_NUMBER
+    convert_cost: 60
+    shard_value: 30
+    convertible: true
+
+  # ═══ УНИКАЛЬНЫЕ СФЕРЫ ═══
+  cerberus:
+    rarity: UNIQUE
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&4&lСфера Цербера"
+    lore:
+      - "&7Эффекты:"
+      - "&c-  Урон +5"
+      - "&c-  Скорость атаки +1"
+      - ""
+      - "&4Проклятие: Пропадает при смерти"
+      - "&7Редкость: &4Уникальная"
+      - "&cНе конвертируется"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 5.0
+        operation: ADD_NUMBER
+      - type: GENERIC_ATTACK_SPEED
+        amount: 1.0
+        operation: ADD_NUMBER
+    enchantments:
+      - VANISHING_CURSE: 1
+    convertible: false
+    shard_value: 100
+
+  flash:
+    rarity: UNIQUE
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&e&lСфера Флеша"
+    lore:
+      - "&7Эффекты:"
+      - "&e-  Броня +1"
+      - "&e-  Скорость +3"
+      - ""
+      - "&7Редкость: &4Уникальная"
+      - "&cНе конвертируется"
+    effects:
+      - type: GENERIC_ARMOR
+        amount: 1.0
+        operation: ADD_NUMBER
+      - type: GENERIC_MOVEMENT_SPEED
+        amount: 0.06 # 30% speed
+        operation: ADD_SCALAR
+    convertible: false
+    shard_value: 100
+
+  armotality:
+    rarity: UNIQUE
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&6&lСфера Армоталити"
+    lore:
+      - "&7Эффекты:"
+      - "&6-  Урон +2"
+      - "&6-  Броня +2"
+      - "&6-  Здоровье +2"
+      - ""
+      - "&7Редкость: &4Уникальная"
+      - "&cНе конвертируется"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 2.0
+        operation: ADD_NUMBER
+      - type: GENERIC_ARMOR
+        amount: 2.0
+        operation: ADD_NUMBER
+      - type: GENERIC_MAX_HEALTH
+        amount: 4.0 # 2 hearts
+        operation: ADD_NUMBER
+    convertible: false
+    shard_value: 150
+
+  immortality:
+    rarity: UNIQUE
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&d&lСфера Имморталити"
+    lore:
+      - "&7Эффекты:"
+      - "&d-  Урон +3"
+      - "&d-  Скорость +2"
+      - ""
+      - "&7Редкость: &4Уникальная"
+      - "&cНе конвертируется"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 3.0
+        operation: ADD_NUMBER
+      - type: GENERIC_MOVEMENT_SPEED
+        amount: 0.04 # 20% speed
+        operation: ADD_SCALAR
+    convertible: false
+    shard_value: 150
+
+  infinity:
+    rarity: UNIQUE
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&b&lСфера Инфинити"
+    lore:
+      - "&7Эффекты:"
+      - "&b-  Урон +2"
+      - "&b-  Броня +2"
+      - "&b-  Скорость +2"
+      - "&b-  Здоровье +2"
+      - ""
+      - "&7Редкость: &4Уникальная"
+      - "&cНе конвертируется"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 2.0
+        operation: ADD_NUMBER
+      - type: GENERIC_ARMOR
+        amount: 2.0
+        operation: ADD_NUMBER
+      - type: GENERIC_MOVEMENT_SPEED
+        amount: 0.04 # 20% speed
+        operation: ADD_SCALAR
+      - type: GENERIC_MAX_HEALTH
+        amount: 4.0 # 2 hearts
+        operation: ADD_NUMBER
+    convertible: false
+    shard_value: 200
+
+  eternity:
+    rarity: UNIQUE
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&5&lСфера Этернити"
+    lore:
+      - "&7Эффекты:"
+      - "&5-  Урон +2"
+      - "&5-  Броня +2"
+      - "&5-  Скорость +50%"
+      - ""
+      - "&7Редкость: &4Уникальная"
+      - "&aМожет конвертироваться"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 2.0
+        operation: ADD_NUMBER
+      - type: GENERIC_ARMOR
+        amount: 2.0
+        operation: ADD_NUMBER
+      - type: GENERIC_MOVEMENT_SPEED
+        amount: 0.50 # 50% speed
+        operation: ADD_SCALAR
+    convertible: true # Exception!
+    convert_cost: 80
+    shard_value: 250
+
+  stinger:
+    rarity: UNIQUE
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&a&lСфера Стингера"
+    lore:
+      - "&7Эффекты:"
+      - "&a-  Урон +2"
+      - "&a-  Броня +2"
+      - "&a-  Скорость +25%"
+      - ""
+      - "&7Редкость: &4Уникальная"
+      - "&aМожет конвертироваться"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 2.0
+        operation: ADD_NUMBER
+      - type: GENERIC_ARMOR
+        amount: 2.0
+        operation: ADD_NUMBER
+      - type: GENERIC_MOVEMENT_SPEED
+        amount: 0.25 # 25% speed
+        operation: ADD_SCALAR
+    convertible: true # Exception!
+    convert_cost: 70
+    shard_value: 200
+
+  satyr:
+    rarity: UNIQUE
+    type: SPHERE
+    material: MAGMA_CREAM
+    name: "&c&lСфера Сатиры"
+    lore:
+      - "&7Эффекты:"
+      - "&c-  Урон +3"
+      - "&c-  Скорость атаки +2"
+      - ""
+      - "&7Редкость: &4Уникальная"
+      - "&cНе конвертируется"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 3.0
+        operation: ADD_NUMBER
+      - type: GENERIC_ATTACK_SPEED
+        amount: 2.0
+        operation: ADD_NUMBER
+    convertible: false
+    shard_value: 150
+
+# Талисманы (автоматически генерируются из сфер при конвертации)
+# Материал: TOTEM_OF_UNDYING
+# Эффекты: идентичны сферам

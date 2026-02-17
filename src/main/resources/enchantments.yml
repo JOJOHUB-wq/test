@@ -1,0 +1,401 @@
+# ════════════════════════════════════════
+#     Кастомные зачарования HolyWorld
+# ════════════════════════════════════════
+
+enchantments:
+  # ═══ ДЛЯ БРОНИ ═══
+  unbreakable:
+    id: UNBREAKABLE
+    name: "&bНепробиваемый"
+    max_level: 1
+    applies_to:
+      - HELMET
+      - CHESTPLATE
+      - LEGGINGS
+      - BOOTS
+    description: "5% шанс получить на 20% меньше урона"
+    effect:
+      type: DAMAGE_REDUCTION
+      chance: 5 # per piece
+      reduction: 20 # percent
+      max_stacks: 4 # all armor pieces
+    obtain:
+      - enchanting_table
+      - book_case
+      - events
+    incompatible_with: []
+
+  mending_2:
+    id: MENDING_2
+    name: "&bПочинка II"
+    max_level: 2
+    applies_to:
+      - HELMET
+      - CHESTPLATE
+      - LEGGINGS
+      - BOOTS
+      - SWORD
+      - PICKAXE
+      - AXE
+      - SHOVEL
+      - HOE
+    description: "Чинит в 2 раза быстрее"
+    effect:
+      type: REPAIR_SPEED
+      multiplier: 2.0
+    craft:
+      recipe:
+        - MENDING
+        - MENDING
+      anvil: true
+    obtain:
+      - craft
+      - events
+
+  # ═══ ДЛЯ ИНСТРУМЕНТОВ ═══
+  magnetism:
+    id: MAGNETISM
+    name: "&bМагнетизм"
+    max_level: 1
+    applies_to:
+      - PICKAXE
+      - SHOVEL
+      - AXE
+      - HOE
+    description: "Лут сразу попадает в инвентарь"
+    effect:
+      type: AUTO_PICKUP
+    obtain:
+      - enchanting_table
+      - book_case
+      - events
+
+  drill_1:
+    id: DRILL_1
+    name: "&bБур I"
+    max_level: 1
+    applies_to:
+      - PICKAXE
+    description: "Разрушает область 3x3x1"
+    effect:
+      type: AREA_MINE
+      size: [youtube](https://www.youtube.com/watch?v=x5cCbd7MZgw)
+    obtain:
+      - book_case
+      - events
+
+  drill_2:
+    id: DRILL_2
+    name: "&bБур II"
+    max_level: 1
+    applies_to:
+      - PICKAXE
+    description: "Разрушает область 3x3x2"
+    effect:
+      type: AREA_MINE
+      size: [youtube](https://www.youtube.com/watch?v=dem7dujCDvg)
+    obtain:
+      - book_case
+      - events
+
+  mega_drill:
+    id: MEGA_DRILL
+    name: "&bМега-бур"
+    max_level: 1
+    applies_to:
+      - PICKAXE
+    description: "Разрушает область 5x5x2"
+    effect:
+      type: AREA_MINE
+      size: [gist.github](https://gist.github.com/kangarko/456d9cfce52dc971b93dbbd12a95f43c)
+    obtain:
+      - /shop
+
+  auto_smelt:
+    id: AUTO_SMELT
+    name: "&bАвтоплавка"
+    max_level: 1
+    applies_to:
+      - PICKAXE
+    description: "Автоматически переплавляет руды"
+    effect:
+      type: AUTO_SMELT_ORES
+    obtain:
+      - enchanting_table
+      - book_case
+      - events
+
+  experienced:
+    id: EXPERIENCED
+    name: "&bОпытный"
+    max_level: 3
+    applies_to:
+      - PICKAXE
+      - SHOVEL
+      - AXE
+      - HOE
+      - SWORD
+    description: "+30% опыта когда в руке"
+    effect:
+      type: XP_BOOST
+      multiplier: 1.3
+    obtain:
+      - enchanting_table
+      - events
+
+  safeguard:
+    id: SAFEGUARD
+    name: "&bНеразрушимость"
+    max_level: 1
+    applies_to:
+      - PICKAXE
+      - SHOVEL
+      - AXE
+      - HOE
+      - SWORD
+      - BOW
+      - CROSSBOW
+    description: "Нельзя использовать ниже 10 прочности"
+    effect:
+      type: PREVENT_USE_LOW_DURABILITY
+      threshold: 10
+    obtain:
+      - book_case
+      - events
+
+  lumberjack:
+    id: LUMBERJACK
+    name: "&bДровосек"
+    max_level: 3
+    applies_to:
+      - AXE
+    description: "Рубит до 128 связанных брёвен"
+    effect:
+      type: TREE_CHOP
+      max_logs: 128
+    obtain:
+      - enchanting_table
+      - events
+
+  delicate:
+    id: DELICATE
+    name: "&bДеликатный"
+    max_level: 3
+    applies_to:
+      - HOE
+    description: "Не ломает неспелые культуры"
+    effect:
+      type: PREVENT_BREAK_UNRIPE
+    obtain:
+      - book_case
+      - events
+
+  farmer:
+    id: FARMER
+    name: "&bФермер"
+    max_level: 4
+    applies_to:
+      - HOE
+      - AXE
+    description: "+20% за уровень дропа культур (макс 80%)"
+    effect:
+      type: CROP_YIELD_BOOST
+      per_level: 20 # percent
+    obtain:
+      - enchanting_table
+      - events
+
+  replant:
+    id: REPLANT
+    name: "&bПосев"
+    max_level: 4
+    applies_to:
+      - HOE
+      - AXE
+    description: "Шанс автоматически пересадить культуру"
+    effect:
+      type: AUTO_REPLANT
+      chance_per_level: 15 # percent
+    obtain:
+      - book_case
+      - events
+
+  filter:
+    id: FILTER
+    name: "&bФильтр"
+    max_level: 1
+    applies_to:
+      - PICKAXE
+      - SHOVEL
+      - AXE
+      - HOE
+    description: "Удаляет выбранные предметы из дропа"
+    effect:
+      type: FILTER_DROPS
+      configurable: true # via /setfilter
+    obtain:
+      - events
+
+  # ═══ ДЛЯ ОРУЖИЯ ═══
+  boss_hunter:
+    id: BOSS_HUNTER
+    name: "&bКрушитель"
+    max_level: 7
+    applies_to:
+      - SWORD
+      - AXE
+      - TRIDENT
+    description: "+70% урона боссам"
+    effect:
+      type: BOSS_DAMAGE_BOOST
+      multiplier: 1.7
+    obtain:
+      - enchanting_table
+      - events
+
+  armor_breaker:
+    id: ARMOR_BREAKER
+    name: "&bРазрушитель"
+    max_level: 2
+    applies_to:
+      - SWORD
+      - AXE
+    description: "Ломает броню врага на 25% быстрее"
+    effect:
+      type: ARMOR_DURABILITY_DAMAGE
+      multiplier: 1.25
+    obtain:
+      - book_case
+      - events
+
+  critical:
+    id: CRITICAL
+    name: "&bКритический"
+    max_level: 2
+    applies_to:
+      - SWORD
+      - AXE
+    description: "20% шанс нанести +15% урона"
+    effect:
+      type: CRITICAL_HIT
+      chance: 20
+      damage_boost: 15
+    obtain:
+      - enchanting_table
+      - events
+
+  rich:
+    id: RICH
+    name: "&bБогач"
+    max_level: 5
+    applies_to:
+      - SWORD
+    description: "+40% за уровень монет с мобов"
+    effect:
+      type: COIN_BOOST
+      per_level: 40 # percent
+    obtain:
+      - events
+
+  homing:
+    id: HOMING
+    name: "&bСамонаводка"
+    max_level: 4
+    applies_to:
+      - TRIDENT
+    description: "Направляет трезубец к ближайшему игроку"
+    effect:
+      type: HOMING_PROJECTILE
+      strength_per_level: 0.25
+    obtain:
+      - book_case
+      - events
+
+  stun:
+    id: STUN
+    name: "&bОглушение"
+    max_level: 2
+    applies_to:
+      - BOW
+      - CROSSBOW
+    description: "5% шанс наложить замедление IV и слепоту"
+    effect:
+      type: STUN_ON_HIT
+      chance: 5
+      slowness_level: 4
+      blindness_duration: 5
+    obtain:
+      - events
+
+  # ═══ ДЛЯ БОТИНКОВ ═══
+  lava_walker:
+    id: LAVA_WALKER
+    name: "&bЛаваход"
+    max_level: 2
+    applies_to:
+      - BOOTS
+    description: "Ходьба по лаве (временный обсидиан)"
+    effect:
+      type: LAVA_WALK
+      radius: 2
+      duration: 3 # seconds
+    obtain:
+      - book_case
+      - events
+
+  # ═══ УСИЛЕННЫЕ ВАНИЛЬНЫЕ ═══
+  efficiency_enhanced:
+    id: EFFICIENCY
+    name: "&bЭффективность"
+    max_level: 10
+    vanilla_enchant: EFFICIENCY
+    description: "Усиленная версия ванильного зачарования"
+
+  sharpness_enhanced:
+    id: SHARPNESS
+    name: "&bОстрота"
+    max_level: 7
+    vanilla_enchant: SHARPNESS
+    description: "Усиленная версия ванильного зачарования"
+
+  protection_enhanced:
+    id: PROTECTION
+    name: "&bЗащита"
+    max_level: 5
+    vanilla_enchant: PROTECTION
+    description: "Усиленная версия ванильного зачарования"
+
+  smite_enhanced:
+    id: SMITE
+    name: "&bНебесная кара"
+    max_level: 7
+    vanilla_enchant: SMITE
+    description: "Усиленная версия ванильного зачарования"
+
+  bane_of_arthropods_enhanced:
+    id: BANE_OF_ARTHROPODS
+    name: "&bПогибель членистоногих"
+    max_level: 7
+    vanilla_enchant: BANE_OF_ARTHROPODS
+    description: "Усиленная версия ванильного зачарования"
+
+  unbreaking_enhanced:
+    id: UNBREAKING
+    name: "&bНеразрушимость"
+    max_level: 5
+    vanilla_enchant: UNBREAKING
+    description: "Усиленная версия ванильного зачарования"
+
+  looting_enhanced:
+    id: LOOTING
+    name: "&bДобыча"
+    max_level: 5
+    vanilla_enchant: LOOTING
+    description: "Усиленная версия ванильного зачарования"
+
+  fortune_enhanced:
+    id: FORTUNE
+    name: "&bУдача"
+    max_level: 5
+    vanilla_enchant: FORTUNE
+    description: "Усиленная версия ванильного зачарования"

@@ -1,0 +1,51 @@
+name: HolyWorldItems
+version: 1.0.0
+main: ua.atherium.holyitems.HolyWorldItems
+api-version: 1.21
+authors: [Oleze_bebidjonov]
+description: Кастомные предметы HolyWorld Lite
+website: https://holyworld.me
+softdepend: [PlaceholderAPI, Vault, WorldGuard, GriefPrevention]
+
+permissions:
+  holyitems.admin:
+    description: Админ права
+    default: op
+  holyitems.use:
+    description: Использование предметов
+    default: true
+  holyitems.give:
+    description: Выдача предметов
+    default: op
+  holyitems.reload:
+    description: Перезагрузка конфига
+    default: op
+  holyitems.debug:
+    description: Режим отладки
+    default: op
+  holyitems.bypass-region:
+    description: Обход региональной защиты
+    default: op
+  holyitems.bypass-cooldown:
+    description: Обход кулдаунов
+    default: op
+
+commands:
+  holyitems:
+    description: Главная команда
+    usage: /holyitems [give|list|info|reload|create|debug]
+    permission: holyitems.use
+    aliases: [hi, hwi, items]
+  custom:
+    description: Настройка материала трапки
+    usage: /custom
+    permission: holyitems.use
+  setfilter:
+    description: Настройка фильтра
+    usage: /setfilter
+    permission: holyitems.use
+  spheres:
+    description: Торговец сферами
+    usage: /spheres
+    permission: holyitems.use
+    aliases: [sphere, sferi]

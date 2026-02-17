@@ -1,0 +1,90 @@
+# ════════════════════════════════════════
+#     Конфигурация HolyWorldItems
+# ════════════════════════════════════════
+
+# Основные настройки
+settings:
+  # Язык плагина (ru)
+  language: "ru"
+
+  # Включить отладку
+  debug: false
+
+  # Автосохранение данных (секунды)
+  auto-save: 300
+
+# Настройки предметов
+items:
+  # Разрешить использование в регионах
+  allow-in-regions: false
+
+  # Показывать сообщения о кулдауне
+  show-cooldown-messages: true
+
+  # Формат времени кулдауна
+  cooldown-format: "&eКулдаун: &c{time}"
+
+# Настройки сфер и талисманов
+spheres:
+  # Разрешить конвертацию в талисманы
+  allow-conversion: true
+
+  # Стоимость конвертации (уровни)
+  conversion-costs:
+    common: 30
+    epic: 50
+    legendary: 60
+
+  # Включить эффекты в PVP
+  enable-in-pvp: true
+
+# Настройки зачарований
+enchantments:
+  # Максимальные уровни
+  max-levels:
+    efficiency: 10
+    sharpness: 7
+    protection: 5
+    unbreaking: 5
+    fortune: 5
+    looting: 5
+
+  # Разрешить комбинирование в наковальне
+  allow-combining: true
+
+# Настройки экономики
+economy:
+  # Включить интеграцию с Vault
+  enabled: true
+
+  # Название валюты
+  currency-name: "монетки"
+
+  # Множитель стоимости предметов
+  price-multiplier: 1.0
+
+# Настройки региональной защиты
+region-protection:
+  # Проверять WorldGuard регионы
+  check-worldguard: true
+
+  # Проверять GriefPrevention территории
+  check-griefprevention: true
+
+  # Разрешить трапки в регионах спавна
+  allow-traps-in-spawn: false
+
+# Сообщения
+messages:
+  prefix: "&8[&6HolyItems&8]"
+  no-permission: "&cУ вас нет прав!"
+  player-not-found: "&cИгрок не найден!"
+  item-not-found: "&cПредмет не найден!"
+  cooldown-active: "&cКулдаун активен! Осталось: &e{time}"
+  item-given: "&aВыдано &e{amount}x {item} &aигроку &e{player}"
+  config-reloaded: "&aКонфигурация перезагружена!"
+  region-protected: "&cЗдесь нельзя использовать этот предмет!"
+  insufficient-funds: "&cНедостаточно монеток!"
+  fast-furnace-placed: "&aБыстрая печка установлена!"
+  golden-spawner-placed: "&6{player} &eустановил золотой спавнер на &f{x} {y} {z}"
+  auto-crafter-placed: "&aАвто-крафтер установлен!"
