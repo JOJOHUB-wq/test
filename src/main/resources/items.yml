@@ -1,0 +1,408 @@
+# ════════════════════════════════════════
+#       Кастомные предметы HolyWorld
+# ════════════════════════════════════════
+
+items:
+  # ═══ БОЕВЫЕ ПРЕДМЕТЫ ═══
+  stan:
+    type: COMBAT
+    material: FIRE_CHARGE
+    name: "&6&lСтан"
+    lore:
+      - "&7Блокирует телепорты в радиусе"
+      - "&e15 блоков &7на &e15 секунд"
+      - "&cКулдаун: 30 секунд"
+    cooldown: 30
+    effects:
+      block_teleport:
+        radius: 15
+        duration: 15
+      slowness:
+        level: 2
+        duration: 15
+        radius: 15
+    obtain:
+      - events
+      - /shop
+      - craft
+    craft_recipe:
+      shape:
+        - "FFF"
+        - "FEF"
+        - "FFF"
+      ingredients:
+        F: FIRE_CHARGE
+        E: ENDER_PEARL
+
+  snowball:
+    type: COMBAT
+    material: SNOWBALL
+    name: "&b&lКом снега"
+    lore:
+      - "&7При попадании накладывает"
+      - "&7слепоту и замедление"
+      - "&7на &e10 секунд"
+    on_hit:
+      blindness:
+        duration: 10
+        level: 1
+      slowness:
+        duration: 10
+        level: 2
+    obtain:
+      - craft
+      - events
+
+  jack_o_lantern:
+    type: COMBAT
+    material: JACK_O_LANTERN
+    name: "&6&lСветильник Джейка"
+    lore:
+      - "&7ПКМ: Подсвечивает игроков"
+      - "&7и надевает тыкву на голову"
+      - "&7тем, у кого нет шлема"
+      - "&cКулдаун: 45 секунд"
+    cooldown: 45
+    effects:
+      glowing:
+        duration: 15
+        radius: 20
+      pumpkin_helmet:
+        duration: 15
+        require_no_helmet: true
+    obtain:
+      - events
+      - /shop
+
+  explosive_rod:
+    type: COMBAT
+    material: BLAZE_ROD
+    name: "&c&lВзрывная палочка"
+    lore:
+      - "&7Выстреливает огненным зарядом"
+      - "&7Урон: &e3 HP"
+      - "&cКулдаун: 5 секунд"
+    cooldown: 5
+    effects:
+      shoot_fireball:
+        damage: 3.0
+        speed: 2.0
+    obtain:
+      - craft
+      - events
+
+  echo_shard:
+    type: COMBAT
+    material: ECHO_SHARD
+    name: "&d&lПрощальный гул"
+    lore:
+      - "&7Отбрасывает всех игроков"
+      - "&7в радиусе &e10 блоков"
+      - "&cКулдаун: 60 секунд"
+    cooldown: 60
+    effects:
+      knockback:
+        radius: 10
+        strength: 2.5
+    obtain:
+      - events
+      - /shop
+
+  explosive_thing:
+    type: COMBAT
+    material: TNT
+    name: "&c&lВзрывная штучка"
+    lore:
+      - "&7Создает направленный взрыв"
+      - "&7Дальность: &e15 блоков"
+      - "&cКулдаун: 20 секунд"
+    cooldown: 20
+    effects:
+      directional_explosion:
+        power: 3.0
+        range: 15
+        fire: false
+    obtain:
+      - craft
+      - events
+
+  # ═══ ЛОВУШКИ ═══
+  trap:
+    type: TRAP
+    material: COBWEB
+    name: "&7&lТрапка"
+    lore:
+      - "&7Создает куб 3x3x3 из блоков"
+      - "&7Длительность: &e30 секунд"
+      - "&cКулдаун: 45 секунд"
+      - "&7Материал настраивается в &e/custom"
+    cooldown: 45
+    effects:
+      create_cube:
+        size: 3
+        duration: 30
+        material: "player_choice" # Set via /custom
+    region_check: true
+    obtain:
+      - craft
+      - events
+
+  explosive_trap:
+    type: TRAP
+    material: OBSIDIAN
+    name: "&4&lВзрывная трапка"
+    lore:
+      - "&7На земле: структура 5x5x3"
+      - "&7В воде: стеклянная сфера r=5"
+      - "&7Длительность: &e45 секунд"
+      - "&cКулдаун: 60 секунд"
+    cooldown: 60
+    effects:
+      land_structure:
+        size: [5, 5, 3]
+        material: OBSIDIAN
+        duration: 45
+      water_sphere:
+        radius: 5
+        material: GLASS
+        duration: 45
+    region_check: true
+    obtain:
+      - events
+      - /shop
+
+  # ═══ УТИЛИТАРНЫЕ ПРЕДМЕТЫ ═══
+  experience_bubble:
+    type: UTILITY
+    material: EXPERIENCE_BOTTLE
+    name: "&a&lПузырь опыта"
+    lore:
+      - "&7Мгновенно чинит всю броню"
+      - "&7с зачарованием Починка"
+      - "&eОдноразовое использование"
+    effects:
+      repair_mending_armor: true
+    consume: true
+    obtain:
+      - events
+      - /shop
+
+  fast_furnace:
+    type: UTILITY
+    material: FURNACE
+    name: "&e&lБыстрая печка"
+    lore:
+      - "&7Переплавляет в &e3 раза &7быстрее"
+      - "&7Эффективность топлива: &e150%"
+    effects:
+      speed_multiplier: 3.0
+      fuel_efficiency: 1.5
+    placeable: true
+    obtain:
+      - craft
+      - /shop
+
+  golden_spawner:
+    type: UTILITY
+    material: SPAWNER
+    name: "&6&lЗолотой спавнер"
+    lore:
+      - "&7Генерирует &e10-50 монет"
+      - "&7каждые &e5 минут"
+      - "&eПрочность: &a{durability}%"
+      - "&7Может сломаться!"
+    effects:
+      generate_coins:
+        min: 10
+        max: 50
+        interval: 300 # 5 minutes
+      break_chance: 5 # 5% per use
+      durability:
+        min: 0
+        max: 100
+    placeable: true
+    broadcast_coords: true
+    obtain:
+      - events
+      - /shop
+
+  special_compass:
+    type: UTILITY
+    material: RECOVERY_COMPASS
+    name: "&b&lОсобый компас"
+    lore:
+      - "&7ПКМ: Узнать координаты"
+      - "&7случайной сокровищницы"
+      - "&cКулдаун: 8 часов"
+      - "&eСледующее использование: {time}"
+    cooldown: 28800 # 8 hours
+    effects:
+      show_treasure_coords: true
+    obtain:
+      - events
+      - /shop
+
+  universal_key:
+    type: UTILITY
+    material: TRIAL_KEY
+    name: "&d&lУниверсальный ключ"
+    lore:
+      - "&7Открывает особые подземелья"
+      - "&7и призывает боссов"
+      - "&eОдноразовое использование"
+    effects:
+      open_dungeon: true
+      summon_boss:
+        types:
+          - WITHER
+          - WARDEN
+          - ELDER_GUARDIAN
+    consume: true
+    obtain:
+      - events
+
+  auto_crafter:
+    type: UTILITY
+    material: DISPENSER
+    name: "&7Авто-крафтер" # Will be renamed by player
+    lore:
+      - "&7Автоматически крафтит предметы"
+      - "&7Скорость: &e1 крафт / 3 сек"
+    effects:
+      auto_craft:
+        speed: 3
+    placeable: true
+    obtain:
+      - craft
+
+  jack_pickaxe:
+    type: UTILITY
+    material: NETHERITE_PICKAXE
+    name: "&6&lКирка Джейка"
+    lore:
+      - "&7Позволяет добывать спавнеры"
+      - "&7без их разрушения"
+      - "&9Эффективность X"
+      - "&9Неразрушимость V"
+      - "&9Починка"
+    enchantments:
+      EFFICIENCY: 10
+      UNBREAKING: 5
+      MENDING: 1
+    effects:
+      silk_touch_spawners: true
+    durability: 5000
+    obtain:
+      - /shop
+
+  unbreakable_elytra:
+    type: UTILITY
+    material: ELYTRA
+    name: "&b&lНерушимые элитры"
+    lore:
+      - "&7Бесконечная прочность"
+    unbreakable: true
+    obtain:
+      - events
+      - /shop
+
+  armored_elytra:
+    type: UTILITY
+    material: ELYTRA
+    name: "&d&lБроневая элитра"
+    lore:
+      - "&7Защита: &e+8 &7(алмазный нагрудник)"
+      - "&7Прочность: &e+2"
+      - "&7Полет разрешен"
+    attributes:
+      GENERIC_ARMOR: 8
+      GENERIC_ARMOR_TOUGHNESS: 2
+    enchantment_glow: true
+    obtain:
+      - events
+
+  mysterious_spawn_egg:
+    type: UTILITY
+    material: SPAWNER
+    name: "&5&lЗагадочное яйцо призыва"
+    lore:
+      - "&7Спавнит 3 типа уникальных мобов"
+      - "&e1. &7Усиленный зомби (HP: 40, Урон: 8)"
+      - "&e2. &7Огненный скелет (стреляет огнем)"
+      - "&e3. &7Эндер-крипер (телепортируется)"
+    effects:
+      spawn_custom_mobs:
+        types:
+          - type: ZOMBIE
+            health: 40
+            damage: 8
+            name: "&cУсиленный зомби"
+          - type: SKELETON
+            fire_resistance: true
+            flame_arrows: true
+            name: "&6Огненный скелет"
+          - type: CREEPER
+            teleport: true
+            explosion_radius: 5
+            name: "&dЭндер-крипер"
+    obtain:
+      - events
+
+  emerald_dust:
+    type: UTILITY
+    material: LIME_DYE
+    name: "&a&lИзумрудная пыль"
+    lore:
+      - "&7Валюта для торговли с жителями"
+      - "&79 пылей = 1 изумруд"
+    stackable: 64
+    craft_from: EMERALD
+    craft_amount: 9
+    obtain:
+      - craft
+
+  sun_helmet:
+    type: UTILITY
+    material: GOLDEN_HELMET
+    name: "&e&lШлем солнца"
+    lore:
+      - "&7Защита: &e+3"
+      - "&7Прочность: &e+3"
+      - "&7Сопротивление отбросу: &e+0.1"
+      - "&9Защита V"
+      - "&9Неразрушимость V"
+    enchantments:
+      PROTECTION: 5
+      UNBREAKING: 5
+    attributes:
+      GENERIC_ARMOR: 3
+      GENERIC_ARMOR_TOUGHNESS: 3
+      GENERIC_KNOCKBACK_RESISTANCE: 0.1
+    unbreakable: true
+    custom_model_data: 1001
+    obtain:
+      - events
+      - /shop
+
+  zombified_helmet:
+    type: UTILITY
+    material: PIGLIN_HEAD
+    name: "&6&lЗомбифицированный шлем"
+    lore:
+      - "&7Защита: &e+3"
+      - "&7Прочность: &e+3"
+      - "&7Сопротивление отбросу: &e+0.1"
+      - "&9Защита V"
+      - "&9Неразрушимость V"
+      - "&7Версия: &e1.20+"
+    enchantments:
+      PROTECTION: 5
+      UNBREAKING: 5
+    attributes:
+      GENERIC_ARMOR: 3
+      GENERIC_ARMOR_TOUGHNESS: 3
+      GENERIC_KNOCKBACK_RESISTANCE: 0.1
+    unbreakable: true
+    minecraft_version: "1.20"
+    obtain:
+      - events

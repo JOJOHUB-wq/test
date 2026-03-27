@@ -1,0 +1,48 @@
+# ════════════════════════════════════════
+#       Кастомные зелья
+# ════════════════════════════════════════
+
+potions:
+  strength_2:
+    id: STRENGTH_2
+    name: "&c&lЗелье силы II"
+    material: POTION
+    color: "#FF4040"
+    effects:
+      - type: STRENGTH
+        duration: 180 # 3:00
+        amplifier: 1 # Level 2 (0 is 1)
+    price: 250
+
+  speed_2:
+    id: SPEED_2
+    name: "&b&lЗелье скорости II"
+    material: POTION
+    color: "#7CAFC2"
+    effects:
+      - type: SPEED
+        duration: 180 # 3:00
+        amplifier: 1
+    price: 300
+
+  fire_resistance:
+    id: FIRE_RESISTANCE
+    name: "&6&lЗелье огнестойкости"
+    material: POTION
+    color: "#FF6600"
+    effects:
+      - type: FIRE_RESISTANCE
+        duration: 480 # 8:00
+        amplifier: 0
+    price: 330
+
+  invisibility:
+    id: INVISIBILITY
+    name: "&7&lЗелье невидимости"
+    material: POTION
+    color: "#7F8392"
+    effects:
+      - type: INVISIBILITY
+        duration: 180 # 3:00
+        amplifier: 0
+    price: 500

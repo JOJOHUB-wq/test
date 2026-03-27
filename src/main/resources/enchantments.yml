@@ -1,0 +1,180 @@
+# ════════════════════════════════════════
+#       Кастомные зачарования
+# ════════════════════════════════════════
+
+enchantments:
+  # ═══ БРОНЯ ═══
+  unbreakable:
+    id: UNBREAKABLE
+    name: "&bНепробиваемый"
+    max_level: 1
+    applies_to: [ARMOR]
+    chance: 5 # 5% per level
+    damage_reduction: 20 # 20%
+    description: "&7Шанс {chance}% получить на {amount}% меньше урона"
+
+  mending_2:
+    id: MENDING_2
+    name: "&aПочинка II"
+    max_level: 1
+    applies_to: [ARMOR]
+    multiplier: 2.0
+    description: "&7Чинит броню в 2 раза быстрее"
+
+  # ═══ ИНСТРУМЕНТЫ ═══
+  magnetism:
+    id: MAGNETISM
+    name: "&bМагнетизм"
+    max_level: 1
+    applies_to: [TOOLS]
+    description: "&7Лут сразу попадает в инвентарь"
+
+  drill:
+    id: DRILL
+    name: "&6Бур"
+    max_level: 2
+    applies_to: [PICKAXE]
+    radius:
+      1: [1, 1, 0] # 3x3x1
+      2: [1, 1, 1] # 3x3x2
+    description: "&7Ломает область {area}"
+
+  mega_drill:
+    id: MEGA_DRILL
+    name: "&cМега-бур"
+    max_level: 1
+    applies_to: [PICKAXE]
+    radius: [2, 2, 1] # 5x5x2
+    description: "&7Ломает область 5x5x2"
+    obtain_only: SHOP
+
+  auto_smelt:
+    id: AUTO_SMELT
+    name: "&6Автоплавка"
+    max_level: 1
+    applies_to: [PICKAXE]
+    description: "&7Автоматически переплавляет руды"
+
+  experienced:
+    id: EXPERIENCED
+    name: "&aОпытный"
+    max_level: 3
+    applies_to: [TOOLS]
+    multiplier: 0.3 # +30%
+    description: "&7+{amount}% опыта при использовании"
+
+  safeguard:
+    id: SAFEGUARD
+    name: "&eНеразрушимость"
+    max_level: 1
+    applies_to: [TOOLS]
+    threshold: 10
+    description: "&7Запрещает использование при прочности < 10"
+
+  lumberjack:
+    id: LUMBERJACK
+    name: "&2Дровосек"
+    max_level: 3
+    applies_to: [AXE]
+    limit: 128
+    description: "&7Срубает дерево целиком"
+
+  delicate:
+    id: DELICATE
+    name: "&dДеликатный"
+    max_level: 3
+    applies_to: [HOE]
+    description: "&7Не ломает неспелые посевы"
+
+  farmer:
+    id: FARMER
+    name: "&aФермер"
+    max_level: 4
+    applies_to: [HOE, AXE]
+    multiplier: 0.2 # +20% per level
+    description: "&7+{amount}% урожая"
+
+  replant:
+    id: REPLANT
+    name: "&aПосев"
+    max_level: 4
+    applies_to: [HOE, AXE]
+    chance: 25 # 25% per level base? Or just enable.
+    description: "&7Автоматически засаживает семена"
+
+  filter:
+    id: FILTER
+    name: "&8Фильтр"
+    max_level: 1
+    applies_to: [TOOLS]
+    description: "&7Удаляет дроп, выбранный в /setfilter"
+
+  # ═══ ОРУЖИЕ ═══
+  boss_hunter:
+    id: BOSS_HUNTER
+    name: "&4Крушитель"
+    max_level: 7
+    applies_to: [SWORD, AXE, TRIDENT]
+    multiplier: 0.7 # +70%
+    description: "&7+{amount}% урона по боссам"
+
+  armor_breaker:
+    id: ARMOR_BREAKER
+    name: "&cРазрушитель"
+    max_level: 2
+    applies_to: [SWORD, AXE]
+    durability_damage_multiplier: 1.25 # 25% faster break
+    description: "&7Ломает броню врага на 25% быстрее"
+
+  critical:
+    id: CRITICAL
+    name: "&cКритический"
+    max_level: 2
+    applies_to: [SWORD, AXE]
+    chance: 20
+    damage_multiplier: 1.15
+    description: "&7{chance}% шанс нанести +15% урона"
+
+  rich:
+    id: RICH
+    name: "&6Богач"
+    max_level: 5
+    applies_to: [SWORD]
+    multiplier: 0.4 # +40% per level
+    description: "&7+{amount}% монет с мобов"
+
+  homing:
+    id: HOMING
+    name: "&bСамонаводка"
+    max_level: 4
+    applies_to: [TRIDENT]
+    description: "&7Трезубец летит к ближайшему игроку"
+
+  stun:
+    id: STUN
+    name: "&8Оглушение"
+    max_level: 2
+    applies_to: [BOW, CROSSBOW]
+    chance: 5
+    effects:
+      - SLOWNESS:4:3
+      - BLINDNESS:1:3
+    description: "&75% шанс наложить замедление и слепоту"
+
+  lava_walker:
+    id: LAVA_WALKER
+    name: "&cЛаваход"
+    max_level: 2
+    applies_to: [BOOTS]
+    description: "&7Позволяет ходить по лаве"
+
+# Увеличенные ванильные лимиты
+vanilla_limits:
+  EFFICIENCY: 10
+  SHARPNESS: 7
+  PROTECTION: 5
+  SMITE: 7
+  BANE_OF_ARTHROPODS: 7
+  UNBREAKING: 5
+  LOOTING: 5
+  FORTUNE: 5

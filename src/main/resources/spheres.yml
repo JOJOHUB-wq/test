@@ -1,0 +1,187 @@
+# ════════════════════════════════════════
+#       Сферы и Талисманы
+# ════════════════════════════════════════
+
+# Настройки редкости
+rarity:
+  COMMON:
+    name: "&7Обычная"
+    color: "&x&a&8&e&b&f&c" # Gray gradient simulation
+    material_sphere: MAGMA_CREAM
+    material_talisman: TOTEM_OF_UNDYING
+    convert_cost: 30
+    level: 1
+  EPIC:
+    name: "&5Эпическая"
+    color: "&x&a&a&5&5&f&f" # Purple gradient
+    material_sphere: MAGMA_CREAM
+    material_talisman: TOTEM_OF_UNDYING
+    convert_cost: 50
+    level: 2
+  LEGENDARY:
+    name: "&6Легендарная"
+    color: "&x&f&f&d&7&0&0" # Gold gradient
+    material_sphere: MAGMA_CREAM
+    material_talisman: TOTEM_OF_UNDYING
+    convert_cost: 60
+    level: 3
+  MYTHIC:
+    name: "&dМифическая"
+    color: "&d"
+    material_sphere: MAGMA_CREAM
+    material_talisman: TOTEM_OF_UNDYING
+    convertible: false
+  UNIQUE:
+    name: "&cУникальная"
+    color: "&c"
+    material_sphere: MAGMA_CREAM
+    material_talisman: TOTEM_OF_UNDYING
+    convertible: false
+
+# Базовые сферы (генерируются автоматически или задаются вручную)
+spheres:
+  # Обычные
+  common_damage:
+    rarity: COMMON
+    type: ATTRIBUTE
+    attribute: GENERIC_ATTACK_DAMAGE
+    amount: 1.0
+    name: "Сфера урона I"
+  common_armor:
+    rarity: COMMON
+    type: ATTRIBUTE
+    attribute: GENERIC_ARMOR
+    amount: 1.0
+    name: "Сфера защиты I"
+  common_speed:
+    rarity: COMMON
+    type: ATTRIBUTE
+    attribute: GENERIC_MOVEMENT_SPEED
+    amount: 0.05
+    name: "Сфера скорости I"
+  common_health:
+    rarity: COMMON
+    type: ATTRIBUTE
+    attribute: GENERIC_MAX_HEALTH
+    amount: 2.0
+    name: "Сфера здоровья I"
+
+  # Эпические
+  epic_damage:
+    rarity: EPIC
+    type: ATTRIBUTE
+    attribute: GENERIC_ATTACK_DAMAGE
+    amount: 2.0
+    name: "Сфера урона II"
+  epic_armor:
+    rarity: EPIC
+    type: ATTRIBUTE
+    attribute: GENERIC_ARMOR
+    amount: 2.0
+    name: "Сфера защиты II"
+
+  # Легендарные
+  legendary_damage:
+    rarity: LEGENDARY
+    type: ATTRIBUTE
+    attribute: GENERIC_ATTACK_DAMAGE
+    amount: 3.0
+    name: "Сфера урона III"
+  legendary_armor:
+    rarity: LEGENDARY
+    type: ATTRIBUTE
+    attribute: GENERIC_ARMOR
+    amount: 3.0
+    name: "Сфера защиты III"
+
+  # Уникальные
+  cerberus:
+    rarity: UNIQUE
+    name: "&4&lСфера Цербера"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 5.0
+      - type: GENERIC_ATTACK_SPEED
+        amount: 1.0
+    curse: VANISHING_CURSE
+    convertible: false
+
+  flash:
+    rarity: UNIQUE
+    name: "&e&lСфера Флеша"
+    effects:
+      - type: GENERIC_ARMOR
+        amount: 1.0
+      - type: GENERIC_MOVEMENT_SPEED
+        amount: 0.15 # ~+3 speed relative
+    convertible: false
+
+  armotality:
+    rarity: UNIQUE
+    name: "&6&lСфера Армоталити"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 2.0
+      - type: GENERIC_ARMOR
+        amount: 2.0
+      - type: GENERIC_MAX_HEALTH
+        amount: 2.0
+    convertible: false
+
+  immortality:
+    rarity: UNIQUE
+    name: "&d&lСфера Имморталити"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 3.0
+      - type: GENERIC_MOVEMENT_SPEED
+        amount: 0.1
+    convertible: false
+
+  infinity:
+    rarity: UNIQUE
+    name: "&b&lСфера Инфинити"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 2.0
+      - type: GENERIC_ARMOR
+        amount: 2.0
+      - type: GENERIC_MOVEMENT_SPEED
+        amount: 0.1
+      - type: GENERIC_MAX_HEALTH
+        amount: 2.0
+    convertible: false
+
+  eternity:
+    rarity: UNIQUE
+    name: "&5&lСфера Этернити"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 2.0
+      - type: GENERIC_ARMOR
+        amount: 2.0
+      - type: GENERIC_MOVEMENT_SPEED
+        amount: 0.50 # +50%
+    convertible: true
+
+  stinger:
+    rarity: UNIQUE
+    name: "&a&lСфера Стингера"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 2.0
+      - type: GENERIC_ARMOR
+        amount: 2.0
+      - type: GENERIC_MOVEMENT_SPEED
+        amount: 0.25 # +25%
+    convertible: true
+
+  satyr:
+    rarity: UNIQUE
+    name: "&c&lСфера Сатиры"
+    effects:
+      - type: GENERIC_ATTACK_DAMAGE
+        amount: 3.0
+      - type: GENERIC_ATTACK_SPEED
+        amount: 2.0
+    convertible: false

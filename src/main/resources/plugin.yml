@@ -1,0 +1,27 @@
+name: HolyWorldItems
+version: 1.0.0
+main: ua.atherium.holyitems.HolyWorldItems
+api-version: 1.21
+authors: [Oleze_bebidjonov]
+softdepend: [PlaceholderAPI, Vault, WorldGuard, GriefPrevention]
+commands:
+  holyitems:
+    description: Основная команда плагина
+    usage: /holyitems
+    aliases: [hi, holy, ae]
+  custom:
+    description: Выбор материала для ловушки
+    usage: /custom
+  setfilter:
+    description: Настройка фильтра предметов
+    usage: /setfilter
+  spheres:
+    description: Торговец сферами
+    usage: /spheres
+permissions:
+  holyitems.admin:
+    description: Полный доступ к плагину
+    default: op
+  holyitems.use:
+    description: Использование предметов
+    default: true

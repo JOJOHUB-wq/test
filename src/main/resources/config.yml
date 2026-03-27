@@ -1,0 +1,42 @@
+# ════════════════════════════════════════
+#       HolyWorldItems - Конфигурация
+# ════════════════════════════════════════
+
+debug: false
+prefix: "&6HolyItems &8>> &f"
+
+messages:
+  no_permission: "&cУ вас нет прав на это действие."
+  reload_success: "&aКонфигурация перезагружена!"
+  player_only: "&cЭту команду может использовать только игрок."
+  item_not_found: "&cПредмет не найден: {item}"
+  give_success: "&aВы выдали {amount}x {item} игроку {player}."
+  receive_item: "&aВы получили {amount}x {item}."
+  cooldown_active: "&cПредмет на перезарядке! Осталось {time} сек."
+  cooldown_finished: "&a{item} &aготов к использованию!"
+  trap_region_error: "&cЗдесь нельзя использовать ловушку (регион)!"
+  sphere_buy_success: "&aВы купили сферу {sphere} за {cost} осколков."
+  sphere_buy_fail: "&cНедостаточно осколков!"
+  sphere_upgrade_success: "&aСфера успешно улучшена!"
+  sphere_upgrade_fail: "&cНе удалось улучшить сферу (нужны 2 одинаковые сферы)."
+  not_enough_money: "&cНедостаточно средств!"
+  inventory_full: "&cИнвентарь полон!"
+  filter_set: "&aФильтр обновлен: {item}"
+  filter_cleared: "&aФильтр очищен."
+
+# Настройки GUI
+guis:
+  main_title: "&8HolyWorld Items"
+  shop_title: "&8Магазин предметов"
+  sphere_trader_title: "&8Сферомант"
+  sphere_upgrade_title: "&8Улучшение сфер"
+  creator_title: "&8Создание предмета"
+
+# Настройки базы данных (если нужно)
+database:
+  type: SQLITE # MYSQL or SQLITE
+  host: localhost
+  port: 3306
+  name: holyitems
+  user: root
+  password: ""

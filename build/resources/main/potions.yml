@@ -1,0 +1,67 @@
+# ════════════════════════════════════════
+#        Кастомные зелья HolyWorld
+# ════════════════════════════════════════
+
+potions:
+  strength_2:
+    material: POTION
+    name: "&cЗелье силы II"
+    color: "#FF4040"
+    effects:
+      - type: STRENGTH
+        amplifier: 2
+        duration: 180 # 3:00 in seconds
+    lore:
+      - "&9Сила III (3:00)"
+    obtain:
+      - craft
+      - events
+      - /shop
+    price: 250
+
+  speed_2:
+    material: POTION
+    name: "&bЗелье скорости II"
+    color: "#7CAFC2"
+    effects:
+      - type: SPEED
+        amplifier: 2
+        duration: 180 # 3:00
+    lore:
+      - "&9Скорость III (3:00)"
+    obtain:
+      - craft
+      - events
+      - /shop
+    price: 300
+
+  fire_resistance:
+    material: POTION
+    name: "&6Зелье огнестойкости"
+    color: "#FF6600"
+    effects:
+      - type: FIRE_RESISTANCE
+        amplifier: 1
+        duration: 480 # 8:00
+    lore:
+      - "&9Огнестойкость (8:00)"
+    obtain:
+      - craft
+      - events
+      - /shop
+    price: 330
+
+  invisibility:
+    material: POTION
+    name: "&7Зелье невидимости"
+    color: "#7F8392"
+    effects:
+      - type: INVISIBILITY
+        amplifier: 1
+        duration: 180 # 3:00
+    lore:
+      - "&9Невидимость (3:00)"
+    obtain:
+      - events
+      - /shop
+    price: 500
